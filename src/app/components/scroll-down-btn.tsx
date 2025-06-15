@@ -12,7 +12,7 @@ const ScrollDownBtn = () => {
 
   return (
     <div
-      className="text-gray-400 hover:text-gray-700 cursor-pointer hover:scale-110 transition duration-300 ease-in-out"
+      className="text-gray-300 hover:text-gray-700 cursor-pointer hover:scale-110 transition duration-300 ease-in-out"
       onClick={scrollDown}
     >
       <ChevronsDown size={44} />

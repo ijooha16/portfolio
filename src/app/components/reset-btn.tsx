@@ -27,7 +27,7 @@ const ResetBtn = () => {
       {/* 왼쪽: <JuhaYoon */}
       <span
         className={`transition-transform duration-500 ease-in-out bg-white z-10 ${
-          hovered ? "-translate-x-2 text-gray-700" : "translate-x-18"
+          hovered ? "-translate-x-2 text-primary" : "translate-x-18"
         }`}
       >
         &lt;JuhaYoon
@@ -36,7 +36,7 @@ const ResetBtn = () => {
       {/* 가운데: onClick={reload} */}
       <span
         className={`transition-opacity duration-200 ease-in-out ${
-          showMiddle ? "opacity-100 text-gray-700" : "opacity-0"
+          showMiddle ? "opacity-100 from-primary to-secondary bg-gradient-to-r bg-clip-text text-transparent" : "opacity-0"
         }`}
       >
         &nbsp;onClick=&#123;reload&#125;
@@ -45,7 +45,7 @@ const ResetBtn = () => {
       {/* 오른쪽: /> */}
       <span
         className={`transition-transform duration-500 ease-in-out bg-white z-10 ${
-          hovered ? "translate-x-2 text-gray-700" : "-translate-x-19"
+          hovered ? "translate-x-2 text-secondary" : "-translate-x-19"
         }`}
       >
         /&gt;
