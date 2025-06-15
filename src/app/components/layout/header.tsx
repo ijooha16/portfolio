@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import PAGES from "@/app/constants/pages.constant";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import ResetBtn from "../reset-btn";
+import ReloadBtn from "../reload-btn";
 
 const Header = () => {
   const [visible, setVisible] = useState(false);
@@ -33,7 +33,7 @@ const Header = () => {
     ${visible ? "animate-slideInBottom" : "animate-slideInTop"}`}
     >
       <div className={sideWidth}></div>
-      <ResetBtn />
+      <ReloadBtn />
       <div
         className={`${sideWidth} flex justify-end items-center gap-12 font-semibold`}
       >
