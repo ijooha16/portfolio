@@ -5,13 +5,15 @@ const Projects = () => {
   return (
     <SectionContainer>
       <div className="font-bold text-2xl">My Latest Projects</div>
-      <div className="flex gap-6">
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
-      </div>
-      <div className="w-[672px] flex items-center justify-end gap-2 text-gray-400 hover:text-gray-700 hover:scale-105 transition-default">
-        see more <ChevronsRight />
+      <div className="flex flex-col items-end gap-4">
+          <div className="flex gap-6">
+            <ProjectCard />
+            <ProjectCard />
+            <ProjectCard />
+          </div>
+          <div className=" flex items-center justify-end gap-2 text-gray-400 hover:text-gray-700 hover:scale-105 transition-default">
+            see more <ChevronsRight />
+          </div>
       </div>
     </SectionContainer>
   );
