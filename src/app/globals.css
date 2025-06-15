@@ -17,9 +17,33 @@
   /* 애니메이션 설정 */
   --animate-slideInLeft: slideInLeft 1s ease-in-out forwards;
   --animate-slideInRight: slideInRight 1s ease-in-out forwards;
+  --animate-slideInBottom: slideInBottom 0.3s ease-in-out forwards;
+  --animate-slideInTop: slideInTop 0.3s ease-in-out forwards;
   --animate-default: 0.3s ease-in-out;
-  
+
   --transition-default: all 0.3s ease-in-out;
+
+  @keyframes slideInBottom {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideInTop {
+    100% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
 
   @keyframes slideInLeft {
     0% {
@@ -57,5 +81,11 @@ body {
 @layer utilities {
   .transition-default {
     @apply transition duration-300 ease-in-out;
+  }
+}
+
+* {
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 }

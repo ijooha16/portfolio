@@ -22,7 +22,7 @@ const ResetBtn = () => {
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="flex items-center text-xl text-gray-400"
+      className="flex items-center text-xl text-gray-400 font-semibold"
     >
       {/* 왼쪽: <JuhaYoon */}
       <span
