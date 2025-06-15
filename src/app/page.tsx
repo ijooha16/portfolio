@@ -1,11 +1,13 @@
 import TypingEffect from "./components/typing-effect";
 import ResetBtn from "./components/reset-btn";
 import ScrollDownBtn from "./components/scroll-down-btn";
+import Projects from "./components/projects";
+import SectionContainer from "./components/section-container";
 
 const Home = () => {
   return (
-    <div className="flex flex-col">
-      <div className="flex flex-col items-center justify-between h-screen py-20">
+    <>
+      <SectionContainer className="h-screen justify-between">
         <ResetBtn />
         <div className="flex flex-col items-center gap-1">
           <div className="font-bold text-[110px] animate-slideInLeft">
@@ -17,8 +19,9 @@ const Home = () => {
           <TypingEffect />
         </div>
         <ScrollDownBtn />
-      </div>
-    </div>
+      </SectionContainer>
+      <Projects />
+    </>
   );
 };
 
