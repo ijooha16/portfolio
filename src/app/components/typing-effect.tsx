@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const TypingEffect = () => {
-  const fullText = "안녕하세요, 주니어 프론트엔드 개발자 윤주하입니다.";
+  const fullText = "몰입과 집요함으로 성장하고, 사용자 경험을 중심으로 고민하는 프론트엔드 개발자 윤주하입니다.";
   const [text, setText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const i = useRef(0);
@@ -60,7 +60,7 @@ const TypingEffect = () => {
     };
   }, [isDeleting]);
 
-  return <div className="text-[#8E8E8E] min-h-6"> {text} </div>;
+  return <div className="text-gray-400 text-center text-description min-h-12 px-6 md:px-0"> {text} </div>;
 };
 
 export default TypingEffect;

@@ -13,7 +13,20 @@
   /* 색상 설정 */
   --color-primary: #8360c3;
   --color-secondary: #2ebfa0;
-  --color-white: #ededed;
+
+  /* 특수색 */
+  --color-white: #f8f8f8;
+  --color-black: #1c2024;
+  --color-hover: #f9f9fb;
+  --color-overlay: #00000028;
+
+  /* 그림자 */
+  --shadow-default: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  /* 반응형 텍스트 */
+  --text-title: clamp(52px, 10vw, 110px);
+  --text-sub: clamp(20px, 22px, 32px);
+  --text-description: clamp(10px, 14px, 16px);
 
   /* 애니메이션 설정 */
   --animate-slideInLeft: slideInLeft 1s ease-in-out forwards;
@@ -71,12 +84,13 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #ededed;
+    --background: #f8f8f8;
   }
 }
 
 body {
   background: var(--background);
+  color: var(--color-black);
 }
 
 @layer utilities {

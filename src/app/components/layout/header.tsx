@@ -1,16 +1,23 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import PAGES from "@/app/constants/pages.constant";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import ReloadBtn from "../reload-btn";
+import { Menu } from "lucide-react";
+import { Navigation } from "./navigation-bar";
+import Links from "./links";
 
 const Header = () => {
-  const [visible, setVisible] = useState(false);
-  const pathname = usePathname();
-  const pages = [PAGES.HOME, PAGES.ABOUT, PAGES.PROJECTS];
-  const sideWidth = "w-[280px]";
+  const [visible, setVisible] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(true);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const sideWidth = {md: "w-[280px]", sm: "w-10"};
+
+  useEffect(() => {
+    const checkWidth = () => setIsMobile(window.innerWidth <= 1100);
+    checkWidth();
+    window.addEventListener("resize", checkWidth);
+    return () => window.removeEventListener("resize", checkWidth);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,30 +35,33 @@ const Header = () => {
   }, []);
 
   return (
-    <div
-      className={`z-1000 fixed flex justify-between items-center top-0 left-0 w-screen py-8 px-20 bg-white shadow-xl shadow-[#00000003]
-    ${visible ? "animate-slideInBottom" : "animate-slideInTop"}`}
-    >
-      <div className={sideWidth}></div>
-      <ReloadBtn />
+    <>
       <div
-        className={`${sideWidth} flex justify-end items-center gap-12 font-semibold`}
+        className={`z-10000 fixed flex justify-between items-center top-0 left-0 w-screen px-4 md:px-20 bg-white shadow-xl shadow-[#00000003]
+      ${open ? "" : visible ? "animate-slideInBottom" : "animate-slideInTop"}
+      ${isMobile ? "py-4" : "py-8"}`}
       >
-        {pages.map((page) => (
-          <Link
-            key={page}
-            href={page}
-            className={
-              pathname === page
-                ? "text-back"
-                : "text-gray-400 hover:text-black hover:scale-105 transition-default"
-            }
-          >
-            {page === "/" ? "HOME" : page.slice(1, page.length).toUpperCase()}
-          </Link>
-        ))}
+        <div className={`${sideWidth.sm} md-${sideWidth.md}`}></div>
+        <ReloadBtn />
+        <div
+          className={`${sideWidth.sm} md-${sideWidth.md} flex justify-end items-center gap-12`}
+        >
+          {!isMobile ? (
+            <Links />
+          ) : (
+            <>
+              <div
+                onClick={() => setOpen(!open)}
+                className="flex p-2 justify-center items-center rounded-full text-black cursor-pointer hover:bg-hover"
+              >
+                <Menu />
+              </div>
+            </>
+          )}
+        </div>
       </div>
-    </div>
+      {isMobile && <Navigation open={open} setOpen={setOpen} />}
+    </>
   );
 };
 
