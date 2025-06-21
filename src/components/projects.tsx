@@ -1,6 +1,6 @@
 import { ChevronsRight } from "lucide-react";
 import SectionContainer from "./common/section-container";
-import SectionTitle from "./section-title";
+import SectionTitle from "./common/section-title";
 
 const Projects = () => {
   return (

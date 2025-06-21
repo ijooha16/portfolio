@@ -8,7 +8,7 @@ import Links from "./links";
 
 const Header = () => {
   const [visible, setVisible] = useState<boolean>(false);
-  const [open, setOpen] = useState<boolean>(true);
+  const [open, setOpen] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const sideWidth = {md: "w-[280px]", sm: "w-10"};
 

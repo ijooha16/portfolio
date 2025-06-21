@@ -1,10 +1,13 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { usePathname } from "next/navigation";
-
 import Link from "next/link";
-import PAGES, { Page } from "@/app/constants/pages.constant";
+import PAGES, { Page } from "@/constants/pages.constant";
 
-const Links = () => {
+const Links = ({
+  setOpen,
+}: {
+  setOpen?: Dispatch<SetStateAction<boolean>>;
+}) => {
   const pathname = usePathname();
 
   const pages: Page[] = [PAGES.HOME, PAGES.ABOUT, PAGES.PROJECTS];
@@ -15,6 +18,7 @@ const Links = () => {
         <Link
           key={page}
           href={page}
+          onClick={() => setOpen && setOpen(false)}
           className={`font-semibold
             ${
               pathname === page

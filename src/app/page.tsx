@@ -1,7 +1,8 @@
-import TypingEffect from "../components/typing-effect";
-import ScrollDownBtn from "../components/scroll-down-btn";
-import Projects from "../components/projects";
-import SectionContainer from "../components/common/section-container";
+import TypingEffect from "@/components/typing-effect";
+import ScrollDownBtn from "@/components/scroll-down-btn";
+import Projects from "@/components/projects";
+import SectionContainer from "@/components/common/section-container";
+import Stacks from "@/components/stacks";
 
 const Home = () => {
   return (
@@ -19,6 +20,7 @@ const Home = () => {
         </div>
         <ScrollDownBtn />
       </SectionContainer>
+      <Stacks />
       <Projects />
     </>
   );

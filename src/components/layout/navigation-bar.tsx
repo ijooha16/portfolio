@@ -67,7 +67,7 @@ export const Navigation = ({
           open ? "translate-y-0" : "-translate-y-full"
         } transition-all duration-500`}
       >
-        <Links />
+        <Links setOpen={setOpen} />
       </div>
     </div>
   );
