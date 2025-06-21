@@ -5,12 +5,13 @@ import ReloadBtn from "../reload-btn";
 import { Menu } from "lucide-react";
 import { Navigation } from "./navigation-bar";
 import Links from "./links";
+import Icon from "../common/icon";
 
 const Header = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
-  const sideWidth = {md: "w-[280px]", sm: "w-10"};
+  const sideWidth = { md: "w-[280px]", sm: "w-10" };
 
   useEffect(() => {
     const checkWidth = () => setIsMobile(window.innerWidth <= 1100);
@@ -50,12 +51,9 @@ const Header = () => {
             <Links />
           ) : (
             <>
-              <div
-                onClick={() => setOpen(!open)}
-                className="flex p-2 justify-center items-center rounded-full text-black cursor-pointer hover:bg-hover"
-              >
+              <Icon onClick={() => setOpen(!open)}>
                 <Menu />
-              </div>
+              </Icon>
             </>
           )}
         </div>
