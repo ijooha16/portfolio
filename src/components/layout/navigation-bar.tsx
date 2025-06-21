@@ -65,7 +65,7 @@ export const Navigation = ({
         tabIndex={-1}
         className={`flex flex-col items-end gap-4 md:gap-8 text-md bg-white shadow-default fixed min-w-screen p-[110px_32px_42px_0] md:p-[140px_80px_48px_0] rounded-xl ${
           open ? "translate-y-0" : "-translate-y-full"
-        } transition-all duration-300`}
+        } transition-all duration-500`}
       >
         <Links />
       </div>

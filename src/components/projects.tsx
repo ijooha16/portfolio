@@ -1,10 +1,11 @@
 import { ChevronsRight } from "lucide-react";
-import SectionContainer from "./section-container";
+import SectionContainer from "./common/section-container";
+import SectionTitle from "./section-title";
 
 const Projects = () => {
   return (
     <SectionContainer>
-      <div className="font-bold text-2xl">My Latest Projects</div>
+      <SectionTitle>My Latest Projects</SectionTitle>
       <div className="flex flex-col items-end gap-4">
         <div className="flex gap-6 overflow-auto max-w-screen pb-1 px-4">
           <ProjectCard />

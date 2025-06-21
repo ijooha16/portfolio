@@ -1,7 +1,7 @@
-import TypingEffect from "./components/typing-effect";
-import ScrollDownBtn from "./components/scroll-down-btn";
-import Projects from "./components/projects";
-import SectionContainer from "./components/section-container";
+import TypingEffect from "../components/typing-effect";
+import ScrollDownBtn from "../components/scroll-down-btn";
+import Projects from "../components/projects";
+import SectionContainer from "../components/common/section-container";
 
 const Home = () => {
   return (
