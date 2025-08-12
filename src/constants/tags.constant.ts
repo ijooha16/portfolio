@@ -5,6 +5,7 @@ export const TAGS = {
   NEXTJS: "NextJs",
   REACT: "React",
   API: "API",
+  JS: "Js",
 } as const;
 
 export type TagType = (typeof TAGS)[keyof typeof TAGS];

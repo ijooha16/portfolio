@@ -23,10 +23,10 @@ export const stacks: Stack[] = [
     alt: "Figma",
     src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg",
   },
-  {
-    alt: "Ps",
-    src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/photoshop/photoshop-original.svg",
-  },
+  // {
+  //   alt: "Ps",
+  //   src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/photoshop/photoshop-original.svg",
+  // },
 ];
 
 export type Stack = {

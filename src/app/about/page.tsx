@@ -15,9 +15,9 @@ const About = () => {
           <Profile />
           <div className="flex flex-col gap-28">
             <AboutMe />
+            <Information data={experience} />
             <Information data={education} />
             <Information data={language} />
-            <Information data={experience} />
             <Information data={awards} />
           </div>
         </div>
