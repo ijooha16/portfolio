@@ -23,9 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${pretendard.variable}`}>
-      <body className="flex flex-col min-h-screen bg-background font-pretendard text-gray-900 hide-scrollbar">
+      <body className="flex flex-col bg-background font-pretendard text-gray-900 hide-scrollbar">
         <Header />
-        <main className="flex-1">{children}</main>
+        <main className="min-h-screen">{children}</main>
         <Footer />
       </body>
     </html>

@@ -15,7 +15,7 @@ const Projects = () => {
   const [isList, setIsList] = useState(true);
   const [filtered, setFiltered] = useState<TagType[]>([]);
   const filteredList = projects.filter((project) =>
-    project.tags.some((tag) => filtered.includes(tag))
+    filtered.every((tag) => project.tags.includes(tag))
   );
 
   return (

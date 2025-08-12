@@ -1,5 +1,7 @@
+import Icon from "@/components/common/icon";
 import Tag from "@/components/common/tag";
 import { TAGS, TagType } from "@/constants/tags.constant";
+import { RotateCcwIcon } from "lucide-react";
 import React, { Dispatch, SetStateAction } from "react";
 
 const Filter = ({
@@ -16,7 +18,7 @@ const Filter = ({
   };
 
   return (
-    <div className="flex gap-2 px-2">
+    <div className="flex items-center gap-2 px-2">
       {Object.values(TAGS).map((tag) => (
         <Tag
           key={tag}
@@ -26,6 +28,9 @@ const Filter = ({
           active={filtered.some((f) => f === tag)}
         />
       ))}
+      <Icon onClick={() => setFiltered([])} active={filtered.length > 0}>
+        <RotateCcwIcon size={16} />
+      </Icon>
     </div>
   );
 };
