@@ -27,7 +27,9 @@ const Header = () => {
       if (scrollY > 10) {
         setVisible(true);
       } else {
-        setVisible(false);
+        setTimeout(() => {
+          setVisible(false);
+        }, 3000);
       }
     };
 
