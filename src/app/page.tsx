@@ -7,7 +7,7 @@ import Stacks from "@/components/stacks";
 const Home = () => {
   return (
     <>
-      <SectionContainer className="h-screen justify-between">
+      <SectionContainer className="h-screen -translate-y-[72px] justify-between">
         <div></div>
         <div className="flex flex-col items-center gap-1">
           <div className="font-bold text-title animate-slideInLeft mb-2 from-primary to-secondary bg-gradient-to-r bg-clip-text text-transparent">

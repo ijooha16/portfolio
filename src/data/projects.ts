@@ -2,6 +2,7 @@ import { TagType } from "@/constants/tags.constant";
 
 export const projects: ProjectType[] = [
   {
+    id: 1,
     title: "Smookie",
     summary: "AI 기반 감정 기록 서비스",
     features: [
@@ -28,6 +29,7 @@ export const projects: ProjectType[] = [
     },
   },
   {
+    id: 2,
     title: "Play Link",
     summary: "운동 매칭 서비스",
     features: [
@@ -53,6 +55,7 @@ export const projects: ProjectType[] = [
     },
   },
   {
+    id: 3,
     title: "AI 목표 달성 서비스",
     summary: "AI와 함께 목표를 세우고 달성하는 개인 프로젝트",
     features: [
@@ -77,6 +80,7 @@ export const projects: ProjectType[] = [
     },
   },
   {
+    id: 4,
     title: "Hash-Cafe",
     summary: "현재 위치 기반 주변 카페 탐색 서비스",
     features: [
@@ -102,6 +106,7 @@ export const projects: ProjectType[] = [
     },
   },
   {
+    id: 5,
     title: "MBTI 검사 사이트",
     summary: "React로 만든 개인 프로젝트",
     features: ["반응형: 반응형 구현 ", "JSON server: 데이터 관리", "Zustand: 전역 상태 관리"],
@@ -132,6 +137,7 @@ export const projects: ProjectType[] = [
     },
   },
   {
+    id: 6,
     title: "포켓몬 도감",
     summary: "React 개인 프로젝트",
     features: [
@@ -160,6 +166,7 @@ export const projects: ProjectType[] = [
     },
   },
   {
+    id: 7,
     title: "Judie-movie",
     summary: "JS, 바닐라 JS 개인 프로젝트",
     features: [
@@ -186,6 +193,7 @@ export const projects: ProjectType[] = [
 ];
 
 export type ProjectType = {
+  id: number;
   title: string;
   summary: string;
   features: string[];

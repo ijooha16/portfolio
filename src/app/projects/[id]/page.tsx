@@ -1,25 +1,12 @@
-"use client";
-
-import React from "react";
-import { useParams } from "next/navigation";
 import { projects, ProjectType } from "@/data/projects";
-import SectionContainer from "@/components/common/section-container";
-import SectionTitle from "@/components/common/section-title";
+import ProjectDetailClient from "../_components/project-detail-client";
 
-const ProjectDetail = () => {
-  const router = useParams();
-  const id = router.id;
+const ProjectDetail = ({ params }: { params: { id: string } }) => {
   const project: ProjectType = projects.find(
-    (project) => project.title === id
+    (p) => p.id === parseInt(params.id)
   )!;
 
-  return (
-    <div>
-      <SectionContainer>
-        <SectionTitle>{project.title}</SectionTitle>
-      </SectionContainer>
-    </div>
-  );
+  return <ProjectDetailClient project={project} />;
 };
 
 export default ProjectDetail;

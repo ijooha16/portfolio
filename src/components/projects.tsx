@@ -3,20 +3,29 @@ import SectionContainer from "./common/section-container";
 import SectionTitle from "./common/section-title";
 import ProjectCard from "./common/project-card";
 import { projects } from "@/data/projects";
+import Link from "next/link";
 
 const Projects = () => {
   return (
     <SectionContainer>
       <SectionTitle>My Latest Projects</SectionTitle>
       <div className="flex flex-col items-end gap-4">
-        <div className="flex gap-6 overflow-auto max-w-screen pb-1 px-4">
-          {projects.slice(0, 3).map((project) => (
-            <ProjectCard key={project.title} project={project} />
-          ))}
+        <div className="relative">
+          <div className="flex gap-6 overflow-auto pb-3">
+            {projects.slice(0, 3).map((project) => (
+              <ProjectCard key={project.title} project={project} />
+            ))}
+          </div>
+          {/* <div className="flex justify-center items-center pl-1 py-0.5 rounded-full bg-[#ffffff4b] absolute z-50 right-6 top-1/2 -translate-y-1/2">
+            <ChevronRightIcon />
+          </div> */}
         </div>
-        <div className="flex items-center px-4 justify-end gap-2 text-gray-400 hover:text-gray-700 hover:scale-105 transition-default cursor-pointer">
+        <Link
+          href="/projects"
+          className="flex items-center px-4 justify-end gap-2 text-gray-400 hover:text-gray-700 hover:scale-105 transition-default cursor-pointer"
+        >
           see more <ChevronsRight />
-        </div>
+        </Link>
       </div>
     </SectionContainer>
   );

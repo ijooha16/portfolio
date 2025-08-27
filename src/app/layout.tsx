@@ -25,7 +25,9 @@ export default function RootLayout({
     <html lang="en" className={`${pretendard.variable}`}>
       <body className="flex flex-col bg-background font-pretendard text-gray-900 hide-scrollbar">
         <Header />
-        <main className="min-h-screen">{children}</main>
+        <main className={`min-h-screen pt-[72px] lg:pt-[92px]`}>
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

@@ -17,7 +17,7 @@ const Tag = ({
       onClick={onClick}
       className={`box-border rounded-sm font-semibold ${
         active ? tagColor[tag] : "text-gray-300 border border-gray-300"
-      } ${button ? "cursor-pointer text-sm px-2" : "text-xs px-1"}`}
+      } ${button ? "cursor-pointer text-xs px-2" : "text-xs px-1"}`}
     >
       {tag}
     </div>
