@@ -1,5 +1,4 @@
 import { TagType } from "@/constants/tags.constant";
-import React from "react";
 
 const Tag = ({
   tag,
@@ -26,11 +25,16 @@ const Tag = ({
 
 export default Tag;
 
-const tagColor = {
+const tagColor:TagColorType = {
   Team: "border border-gray-300",
   Personal: "border border-gray-300",
   Leader: "border border-gray-300",
   NextJs: "bg-[#e7e7e7] text-[#000]",
   React: "bg-[#d6f6ff] text-[#2778bf]",
   API: "bg-[#fff] text-[#000]",
+  Js: "bg-[#f7df1e] text-[#000]",
+};
+
+type TagColorType = {
+  [key in TagType]: string;
 };

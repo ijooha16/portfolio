@@ -1,15 +1,13 @@
 import { projects, ProjectType } from "@/data/projects";
 import ProjectDetailClient from "../_components/project-detail-client";
 
-interface ProjectDetailProps {
-  params: {
-    id: string;
-  };
-}
+type PageParams = Promise<{ id: string }>
 
-const ProjectDetail = ({ params }: ProjectDetailProps) => {
+const ProjectDetail = async({ params }: { params: PageParams  }) => {
+  const {id} = await params;
+  
   const project: ProjectType | undefined = projects.find(
-    (p) => p.id === parseInt(params.id)
+    (p) => p.id === parseInt(id)
   );
 
   if (!project) {
