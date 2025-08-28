@@ -7,7 +7,7 @@ const ProjectDetail = async({ params }: { params: PageParams  }) => {
   const {id} = await params;
   
   const project: ProjectType | undefined = projects.find(
-    (p) => p.id === parseInt(id)
+    (p) => p.title === id
   );
 
   if (!project) {

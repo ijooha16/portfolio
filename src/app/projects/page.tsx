@@ -25,7 +25,7 @@ const Projects = () => {
     <>
       <SectionContainer>
         <SectionTitle>PROJECTS</SectionTitle>
-        <div className="flex flex-col w-full flex-wrap md:w-[800px] pr-4 items-end gap-6">
+        <div className="flex flex-col w-full flex-wrap pr-4 items-end gap-6">
           {!isMobile && (
             <div className="flex gap-2">
               <Icon active={isList} onClick={() => setIsList(true)}>
@@ -42,14 +42,24 @@ const Projects = () => {
           className={`${
             isList && !isMobile
               ? "flex flex-col items-center gap-6"
-              : "grid grid-cols-1 md:grid-cols-3 min-w-full sm:grid-cols-2 gap-6"
+              : `grid grid-cols-1 md:grid-cols-${
+                  filteredList.length === 2
+                    ? "2"
+                    : filteredList.length === 1
+                    ? "1"
+                    : "3"
+                } sm:grid-cols-${filteredList.length === 1 ? "1" : "2"}  gap-6`
           }`}
         >
-          {(filtered.length === 0 ? projects : filteredList).map((project) =>
-            isList && !isMobile ? (
-              <ProjectList key={project.title} project={project} />
-            ) : (
-              <ProjectCard key={project.title} project={project} />
+          {filteredList.length === 0 ? (
+            <>검색 결과가 없어요!</>
+          ) : (
+            filteredList.map((project) =>
+              isList && !isMobile ? (
+                <ProjectList key={project.title} project={project} />
+              ) : (
+                <ProjectCard key={project.title} project={project} />
+              )
             )
           )}
         </div>

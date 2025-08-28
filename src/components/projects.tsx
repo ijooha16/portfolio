@@ -11,14 +11,11 @@ const Projects = () => {
       <SectionTitle>My Latest Projects</SectionTitle>
       <div className="flex flex-col items-end gap-4">
         <div className="relative">
-          <div className="flex gap-6 overflow-auto pb-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 overflow-auto pb-3">
             {projects.slice(0, 3).map((project) => (
               <ProjectCard key={project.title} project={project} />
             ))}
           </div>
-          {/* <div className="flex justify-center items-center pl-1 py-0.5 rounded-full bg-[#ffffff4b] absolute z-50 right-6 top-1/2 -translate-y-1/2">
-            <ChevronRightIcon />
-          </div> */}
         </div>
         <Link
           href="/projects"
