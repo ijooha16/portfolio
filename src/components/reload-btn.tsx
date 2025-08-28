@@ -1,19 +1,21 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import { useMediaQuery } from "react-responsive";
 
 const ReloadBtn = () => {
   const [hovered, setHovered] = useState(false);
   const [showMiddle, setShowMiddle] = useState(false);
-  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isClient, setIsClient] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
-    const checkWidth = () => setIsMobile(window.innerWidth <= 1100);
-    checkWidth();
-    window.addEventListener("resize", checkWidth);
-    return () => window.removeEventListener("resize", checkWidth);
+    setIsClient(true); // 클라이언트에서만 렌더링 시작
   }, []);
+
+  const isMobile = useMediaQuery({ maxWidth: 1024 });
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -27,20 +29,27 @@ const ReloadBtn = () => {
     return () => clearTimeout(timeout);
   }, [hovered]);
 
+  if (!isClient) return null;
+
   return (
     <>
       {isMobile ? (
-        <Link href='/' className="font-semibold hover:from-primary hover:to-secondary text-lg hover:bg-gradient-to-r hover:bg-clip-text hover:text-transparent">{'<JuhaYoon />'}</Link>
+        <Link
+          href="/"
+          className="font-semibold hover:from-primary hover:to-secondary text-lg hover:bg-gradient-to-r hover:bg-clip-text hover:text-transparent"
+        >
+          {"<JuhaYoon />"}
+        </Link>
       ) : (
         <div
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
-          onClick={() => window.location.reload()}
-          className="flex items-center text-xl text-gray-400 font-semibold"
+          onClick={() => router.refresh()}
+          className="flex items-center text-xl text-gray-500 font-semibold"
         >
           {/* 왼쪽: <JuhaYoon */}
           <span
-            className={`transition-transform duration-500 ease-in-out bg-white z-10 ${
+            className={`transition-transform duration-500 ease-in-out z-10 ${
               hovered
                 ? "-translate-x-2 text-primary transition-default"
                 : "translate-x-18"
@@ -62,7 +71,7 @@ const ReloadBtn = () => {
 
           {/* 오른쪽: /> */}
           <span
-            className={`transition-transform duration-500 ease-in-out bg-white z-10 ${
+            className={`transition-transform duration-500 ease-in-out z-10 ${
               hovered ? "translate-x-2 text-secondary" : "-translate-x-19"
             }`}
           >

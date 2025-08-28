@@ -1,4 +1,6 @@
-import React, { ReactNode } from "react";
+'use client';
+
+import { ReactNode } from "react";
 
 const Icon = ({
   children,
