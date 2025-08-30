@@ -6,7 +6,7 @@ const AboutMe = () => {
         <span className="h-[1px] flex-1 bg-gray-300" />
       </div>
        <div className="flex flex-col gap-2 pl-4">
-        안녕하세요 어쩌고
+        도전을 즐기며 사용자 경험을 고민하는 개발자 윤주하입니다.
        </div>
     </div>
   );
