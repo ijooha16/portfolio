@@ -3,7 +3,7 @@ import Tag from "@/components/common/tag";
 import { TAGS, TagType } from "@/constants/tags.constant";
 import { RotateCcwIcon } from "lucide-react";
 import React, { Dispatch, SetStateAction } from "react";
-import { useMediaQuery } from "react-responsive";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 const Filter = ({
   filtered,
@@ -12,7 +12,7 @@ const Filter = ({
   filtered: TagType[];
   setFiltered: Dispatch<SetStateAction<TagType[]>>;
 }) => {
-  const isMobile = useMediaQuery({ maxWidth: 920 });
+  const isMobile = useMediaQuery("(max-width: 920px)");
 
   const handleOnClick = (tag: TagType) => {
     setFiltered((prev) =>

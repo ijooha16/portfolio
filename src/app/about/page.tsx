@@ -10,10 +10,10 @@ const About = () => {
   return (
     <>
       <SectionContainer className="bg-gradient-to-tr from-primary to-secondary h-[20dvh]" />
-      <SectionContainer>
-        <div className="flex gap-16 items-start">
+      <SectionContainer className="-translate-y-12">
+        <div className="flex flex-col md:flex-row gap-16 items-start">
           <Profile />
-          <div className="flex flex-col gap-28">
+          <div className="flex flex-col gap-20 md:gap-28">
             <AboutMe />
             <Information data={experience} />
             <Information data={education} />

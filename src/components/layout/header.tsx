@@ -6,12 +6,12 @@ import { Menu } from "lucide-react";
 import { Navigation } from "./navigation-bar";
 import Links from "./links";
 import Icon from "../common/icon";
-import { useMediaQuery } from "react-responsive";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 const Header = () => {
   const [open, setOpen] = useState<boolean>(false);
   const sideWidth = { lg: "w-[280px]", sm: "w-10" };
-  const isMobile = useMediaQuery({ maxWidth: 1024 });
+  const isMobile = useMediaQuery("(max-width: 1024px)");
 
   return (
     <>

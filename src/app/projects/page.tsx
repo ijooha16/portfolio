@@ -10,7 +10,7 @@ import Icon from "@/components/common/icon";
 import { projects } from "@/data/projects";
 import { TagType } from "@/constants/tags.constant";
 import Filter from "./_components/filter";
-import { useMediaQuery } from "react-responsive";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 const Projects = () => {
   const [isList, setIsList] = useState(true);
@@ -19,7 +19,7 @@ const Projects = () => {
     filtered.every((tag) => project.tags.includes(tag))
   );
 
-  const isMobile = useMediaQuery({ maxWidth: 920 });
+  const isMobile = useMediaQuery("(max-width: 920px)");
 
   return (
     <>

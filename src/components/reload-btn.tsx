@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { useMediaQuery } from "react-responsive";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 const ReloadBtn = () => {
   const [hovered, setHovered] = useState(false);
@@ -15,7 +15,7 @@ const ReloadBtn = () => {
     setIsClient(true); // 클라이언트에서만 렌더링 시작
   }, []);
 
-  const isMobile = useMediaQuery({ maxWidth: 1024 });
+  const isMobile = useMediaQuery("(max-width: 1024px)");
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
