@@ -8,7 +8,9 @@ import Link from "next/link";
 const ProjectList = ({ project }: { project: ProjectType }) => {
   return (
     <Link
-      href={`/projects/${project.title}`}
+      href={project.repository}
+      target="_blank"
+      rel="noreferrer"
       className="flex items-center rounded-xl w-full h-[300px] cursor-pointer hover:bg-[#00000006] hover:translate-x-1 transition-default"
     >
       <Image

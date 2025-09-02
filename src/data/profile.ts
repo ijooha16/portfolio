@@ -47,8 +47,7 @@ export const awards: InfoType = {
     {
       title: "(주)스파르타 최종프로젝트 대상",
       date: "2025.05",
-      description:
-        "리더로 참여하여 팀 프로젝트 Smookie를 진행, 최종 대상 수상",
+      description: "리더로 참여하여 팀 프로젝트 Smookie를 진행, 최종 대상 수상",
     },
   ],
 };

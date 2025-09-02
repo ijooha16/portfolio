@@ -19,13 +19,13 @@ const Projects = () => {
     filtered.every((tag) => project.tags.includes(tag))
   );
 
-  const isMobile = useMediaQuery("(max-width: 920px)");
+  const isMobile = useMediaQuery("(max-width: 1024px)");
 
   return (
     <>
       <SectionContainer>
         <SectionTitle>PROJECTS</SectionTitle>
-        <div className="flex flex-col w-full flex-wrap pr-4 items-end gap-6">
+        <div className="max-w-5xl flex flex-col w-full flex-wrap pr-4 items-end gap-6">
           {!isMobile && (
             <div className="flex gap-2">
               <Icon active={isList} onClick={() => setIsList(true)}>
@@ -41,7 +41,7 @@ const Projects = () => {
         <div
           className={`${
             isList && !isMobile
-              ? "flex flex-col items-center gap-6"
+              ? "flex flex-col items-center gap-6 w-5xl"
               : `grid grid-cols-1 md:grid-cols-${
                   filteredList.length === 2
                     ? "2"

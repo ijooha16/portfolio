@@ -18,7 +18,7 @@ const ProjectCard = ({ project }: { project: ProjectType }) => {
         <div className="text-xl font-bold text-white">{project.title}</div>
         <div className="text-gray-300">{project.summary}</div>
       </div>
-      <Link href={`/projects/${project.id}`}>
+      <Link href={`project.repository`} target="_blank" rel="noreferrer">
         <div className="absolute inset-0 bg-gradient-to-t from-[#000000e0] to-transparent  w-full h-60 rounded-xl"></div>
       </Link>
     </div>
