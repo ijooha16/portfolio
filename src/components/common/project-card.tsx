@@ -5,7 +5,8 @@ import Tag from "./tag";
 
 const ProjectCard = ({ project }: { project: ProjectType }) => {
   return (
-    <div
+    <Link
+      href={`projects/${project.id}`}
       className="relative flex flex-col shrink-0 justify-between py-6 px-5 bg-cover bg-center cursor-pointer w-full h-60 rounded-xl shadow-md hover:translate-y-1 transition-default"
       style={{ backgroundImage: `url(${project.img.main.url})` }}
     >
@@ -18,10 +19,8 @@ const ProjectCard = ({ project }: { project: ProjectType }) => {
         <div className="text-xl font-bold text-white">{project.title}</div>
         <div className="text-gray-300">{project.summary}</div>
       </div>
-      <Link href={`project.repository`} target="_blank" rel="noreferrer">
-        <div className="absolute inset-0 bg-gradient-to-t from-[#000000e0] to-transparent  w-full h-60 rounded-xl"></div>
-      </Link>
-    </div>
+      <div className="absolute inset-0 bg-gradient-to-t from-[#000000e0] to-transparent  w-full h-60 rounded-xl"></div>
+    </Link>
   );
 };
 

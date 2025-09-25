@@ -56,7 +56,7 @@ export type InfoType = {
   title: string;
   items: {
     title: string;
-    date: string;
-    description: string;
+    date?: string;
+    description?: string;
   }[];
 };
