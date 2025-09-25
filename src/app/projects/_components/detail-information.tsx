@@ -48,7 +48,7 @@ const Information = ({
           <div className="flex md:flex-row flex-col gap-8 items-center">
             <Image src={img.url} alt={img.alt} width={400} height={300} />
             <div className="flex flex-col gap-3">
-              {items.map((item, idx) => (
+              {items.map((item) => (
                 <div key={item.title} className="flex gap-3 items-center">
                   <span className="font-semibold w-20">{item.title}</span>
                   <span className="text-gray-300">-</span>
@@ -60,7 +60,7 @@ const Information = ({
           </div>
         )}
         {type === "lesson" &&
-          items.map((item, idx) => (
+          items.map((item) => (
             <div key={item.title} className="flex pb-4">
               <div>
                 <div className="font-semibold pb-2">{item.title}</div>

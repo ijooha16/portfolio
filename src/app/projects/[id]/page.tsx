@@ -6,8 +6,9 @@ import SectionContainer from "@/components/common/section-container";
 import SectionTitle from "@/components/common/section-title";
 import Information from "../_components/detail-information";
 import Link from "next/link";
-import { Download, LinkIcon } from "lucide-react";
+import { LinkIcon } from "lucide-react";
 import Tag from "@/components/common/tag";
+import Image from "next/image";
 
 const ProjectDetail = () => {
   const { id } = useParams();
@@ -78,7 +79,10 @@ const SiteLink = ({ site }: { site: { title: string; url?: string } }) => {
     >
       {site.title === "github" && (
         <div className="w-6">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" />
+          <Image
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg"
+            alt="github"
+          />
         </div>
       )}
       {site.title === "presentation" && <LinkIcon size={16} />}
