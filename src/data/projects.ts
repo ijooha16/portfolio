@@ -153,7 +153,7 @@ export const projects: ProjectType[] = [
           { title: "작업 기간", content: "2025.08 ~ (진행중))" },
           {
             title: "사용 스택",
-            content: "next.js, axios, tailwindcss, tanstack, zustand",
+            content: "expo, next.js, axios, tailwindcss, tanstack, zustand",
           },
           {
             title: "맡은 역할",
