@@ -150,7 +150,7 @@ export const projects: ProjectType[] = [
             title: "팀 구성원",
             content: "프론트엔드(2인) 백엔드(1인) 디자이너(1인) 기획자(1인)",
           },
-          { title: "작업 기간", content: "2025.08 ~ (진행중))" },
+          { title: "작업 기간", content: "2025.08 ~ (12월 출시 예정)" },
           {
             title: "사용 스택",
             content: "expo, next.js, axios, tailwindcss, tanstack, zustand",
