@@ -128,7 +128,7 @@ export const projects: ProjectType[] = [
     date: "Date",
     stacks: ["NextJs", "React"],
     link: "",
-    repository: "https://github.com/MO-M-PlayLink/PlayLink-Client",
+    repository: "https://github.com/orgs/MO-M-PlayLink/repositories",
     img: {
       main: {
         alt: "play link",
