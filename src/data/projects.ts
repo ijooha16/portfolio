@@ -199,77 +199,77 @@ export const projects: ProjectType[] = [
     ],
   },
   //ai goal
-  {
-    id: 3,
-    title: "AI 목표 달성 서비스",
-    summary: "AI와 함께 목표를 세우고 달성하는 개인 프로젝트",
-    features: [
-      "Gemini AI: 목표 달성 도우미",
-      "Supabase: 데이터베이스 및 인증 인가",
-    ],
-    tags: ["Personal", "NextJs", "React", "API"],
-    team: 1,
-    description:
-      "프롬프트 형식으로 AI에게 목표 설정을 요청하면 AI가 도와주고\n 함께 목표를 달성해 나가는 서비스입니다. 진행중입니다.",
-    role: "개발자",
-    date: "Date",
-    stacks: ["NextJs", "React", "Supabase"],
-    link: "",
-    repository: "https://github.com/ijooha16/ai-scheduler",
-    img: {
-      main: {
-        alt: "ai goal",
-        url: "/letsgoal/main.png",
-      },
-      sub: { alt: "ai goal sub", url: "/letsgoal/sub_01.png" },
-    },
-    details: [
-      {
-        type: "summary",
-        title: "프로젝트 개요",
-        items: [
-          { title: "프로젝트명", content: "LetsGoal" },
-          {
-            title: "서비스 설명",
-            content: "ai과 함께 목표를 설정하고 달성해 나가는 서비스",
-          },
-          { title: "팀 구성원", content: "개인" },
-          { title: "작업 기간", content: "2025.07 ~ (진행중)" },
-          {
-            title: "사용 스택",
-            content: "next.js, supabase, react-dnd, tailwindcss, tanstack",
-          },
-        ],
-      },
-      // {
-      //   type: "achievement",
-      //   title: "주요 성과",
-      //   items: [
-      //     {
-      //       title: "최종 팀프로젝트 대상 수상",
-      //       issue: "",
-      //       solution: "팀장으로서 팀을 이끌어 최종 프로젝트 대상 수상",
-      //     },
-      //   ],
-      // },
-      {
-        type: "lesson",
-        title: "배운 점",
-        items: [
-          {
-            title: "React DnD 라이브러리 활용: 새로운 기술을 탐구하고 응용하기",
-            content:
-              "처음으로 react-dnd 라이브러리를 사용해봤습니다. 오픈소스로 이렇게 활용도 높은 기능을 공유한다는 점이 인상적이었고, 저도 언젠가 기여해보고 싶다는 생각을 했습니다. 러닝 커브가 높아 처음에는 어려웠지만, 문서를 보며 하나씩 이해하고 구현해 나가면서 점점 재미를 느꼈습니다. 특히 기본적으로 제공되는 단일 리스트 정렬(sorting) 기능을 넘어, 여러 스텝을 연동한 복합 드래그 앤 드롭을 구현해야 했습니다. 검색과 시행착오를 반복하며 결국 원하는 결과를 만들 수 있었고, “남이 만든 라이브러리를 내 상황에 맞게 응용하는 능력”을 키울 수 있었습니다.",
-          },
-          {
-            title: "AI 프롬프트 활용: 원하는 데이터를 얻기 위한 설계 능력",
-            content:
-              "Gemini 같은 AI 모델을 활용해 데이터를 가져오는 기능을 구현했습니다. 대화형 모델이다 보니 단순 응답을 받는 것이 아니라, 내가 원하는 형태의 데이터를 얻기 위해 프롬프트를 정교하게 설계하는 것이 중요했습니다. 이 과정을 통해 “AI를 활용하는 핵심은 질문을 어떻게 설계하느냐에 달려 있다”는 것을 다시 깨달았습니다. 또한, 이전 대화를 기억하도록 연결하는 로직도 시도했지만 구조가 정돈되지 않아 아쉬움이 남았습니다. 앞으로는 프롬프트 엔지니어링과 대화 맥락 관리를 더 체계적으로 개선해보고 싶습니다.",
-          },
-        ],
-      },
-    ],
-  },
+  // {
+  //   id: 3,
+  //   title: "AI 목표 달성 서비스",
+  //   summary: "AI와 함께 목표를 세우고 달성하는 개인 프로젝트",
+  //   features: [
+  //     "Gemini AI: 목표 달성 도우미",
+  //     "Supabase: 데이터베이스 및 인증 인가",
+  //   ],
+  //   tags: ["Personal", "NextJs", "React", "API"],
+  //   team: 1,
+  //   description:
+  //     "프롬프트 형식으로 AI에게 목표 설정을 요청하면 AI가 도와주고\n 함께 목표를 달성해 나가는 서비스입니다. 진행중입니다.",
+  //   role: "개발자",
+  //   date: "Date",
+  //   stacks: ["NextJs", "React", "Supabase"],
+  //   link: "",
+  //   repository: "https://github.com/ijooha16/ai-scheduler",
+  //   img: {
+  //     main: {
+  //       alt: "ai goal",
+  //       url: "/letsgoal/main.png",
+  //     },
+  //     sub: { alt: "ai goal sub", url: "/letsgoal/sub_01.png" },
+  //   },
+  //   details: [
+  //     {
+  //       type: "summary",
+  //       title: "프로젝트 개요",
+  //       items: [
+  //         { title: "프로젝트명", content: "LetsGoal" },
+  //         {
+  //           title: "서비스 설명",
+  //           content: "ai과 함께 목표를 설정하고 달성해 나가는 서비스",
+  //         },
+  //         { title: "팀 구성원", content: "개인" },
+  //         { title: "작업 기간", content: "2025.07 ~ (진행중)" },
+  //         {
+  //           title: "사용 스택",
+  //           content: "next.js, supabase, react-dnd, tailwindcss, tanstack",
+  //         },
+  //       ],
+  //     },
+  //     // {
+  //     //   type: "achievement",
+  //     //   title: "주요 성과",
+  //     //   items: [
+  //     //     {
+  //     //       title: "최종 팀프로젝트 대상 수상",
+  //     //       issue: "",
+  //     //       solution: "팀장으로서 팀을 이끌어 최종 프로젝트 대상 수상",
+  //     //     },
+  //     //   ],
+  //     // },
+  //     {
+  //       type: "lesson",
+  //       title: "배운 점",
+  //       items: [
+  //         {
+  //           title: "React DnD 라이브러리 활용: 새로운 기술을 탐구하고 응용하기",
+  //           content:
+  //             "처음으로 react-dnd 라이브러리를 사용해봤습니다. 오픈소스로 이렇게 활용도 높은 기능을 공유한다는 점이 인상적이었고, 저도 언젠가 기여해보고 싶다는 생각을 했습니다. 러닝 커브가 높아 처음에는 어려웠지만, 문서를 보며 하나씩 이해하고 구현해 나가면서 점점 재미를 느꼈습니다. 특히 기본적으로 제공되는 단일 리스트 정렬(sorting) 기능을 넘어, 여러 스텝을 연동한 복합 드래그 앤 드롭을 구현해야 했습니다. 검색과 시행착오를 반복하며 결국 원하는 결과를 만들 수 있었고, “남이 만든 라이브러리를 내 상황에 맞게 응용하는 능력”을 키울 수 있었습니다.",
+  //         },
+  //         {
+  //           title: "AI 프롬프트 활용: 원하는 데이터를 얻기 위한 설계 능력",
+  //           content:
+  //             "Gemini 같은 AI 모델을 활용해 데이터를 가져오는 기능을 구현했습니다. 대화형 모델이다 보니 단순 응답을 받는 것이 아니라, 내가 원하는 형태의 데이터를 얻기 위해 프롬프트를 정교하게 설계하는 것이 중요했습니다. 이 과정을 통해 “AI를 활용하는 핵심은 질문을 어떻게 설계하느냐에 달려 있다”는 것을 다시 깨달았습니다. 또한, 이전 대화를 기억하도록 연결하는 로직도 시도했지만 구조가 정돈되지 않아 아쉬움이 남았습니다. 앞으로는 프롬프트 엔지니어링과 대화 맥락 관리를 더 체계적으로 개선해보고 싶습니다.",
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
 
   // {
   //   id: 4,
