@@ -100,7 +100,7 @@ export const projects: ProjectType[] = [
     ],
     date: "Date",
     stacks: ["NextJs", "React"],
-    link: "https://smookie.co",
+    link: "smookie-git-main-juha-yoons-projects.vercel.app",
     repository: "https://github.com/fourkie/fourkie",
     img: {
       main: {
