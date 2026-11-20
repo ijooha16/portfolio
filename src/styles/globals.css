@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ededed;
+  --background: #f4f6f9;
 }
 
 @theme {
@@ -13,6 +13,19 @@
   /* 색상 설정 */
   --color-primary: #8360c3;
   --color-secondary: #2ebfa0;
+  --color-brand: #8360c3;
+  --color-brand-deep: #3e2768;
+  --color-brand-t2: #a890d5;
+  --color-brand-t3: #c7b7e4;
+  --color-brand-t4: #e6dff3;
+  --color-brand-pale: #f3eff9;
+  --color-accent: #2ebfa0;
+  --color-ink: #222222;
+  --color-text: #3a4654;
+  --color-mute: #5a6678;
+  --color-caption: #8a94a2;
+  --color-surface2: #eff2f6;
+  --color-surface3: #f4f6f9;
 
   /* 특수색 */
   --color-white: #f8f8f8;
@@ -21,7 +34,7 @@
   --color-overlay: #00000028;
 
   /* 그림자 */
-  --shadow-default: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-default: 0 2px 12px rgba(0, 0, 0, 0.05);
 
   /* 반응형 텍스트 */
   --text-title: clamp(52px, 10vw, 110px);
@@ -84,7 +97,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #f8f8f8;
+    --background: #f4f6f9;
   }
 }
 

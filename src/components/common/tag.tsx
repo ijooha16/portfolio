@@ -20,9 +20,9 @@ const Tag = ({
         noDecoration
           ? "text-gray-700 border rounded-full py-1 px-2 border-gray-200 backdrop-blur-sm bg-white/60 "
           : active
-          ? `${tagColor[tag]} rounded-sm`
-          : "text-gray-300 border border-gray-300 rounded-sm"
-      } ${button ? "cursor-pointer text-xs px-2" : "text-xs px-1"}`}
+          ? `${tagColor[tag]} rounded-md py-0.5`
+          : "text-gray-400 border border-gray-200 rounded-md py-0.5"
+      } ${button ? "cursor-pointer text-xs px-2" : "text-xs px-2"}`}
     >
       {noDecoration && "# "}
       {tag}
@@ -33,15 +33,15 @@ const Tag = ({
 export default Tag;
 
 const tagColor: TagColorType = {
-  Award: "bg-[#ffeeb8] text-[#8a6100] border border-[#e8c55c]",
-  AI: "bg-[#e3e0ff] text-[#4b3fb5] border border-[#a9a0f0]",
-  Team: "bg-[#c7e8ca] text-[#37643d] border border-[#85cc8f]",
-  Personal: "bg-[#dac7e8] text-[#65467e] border border-[#af96c1]",
-  Leader: "bg-[#dfc6b4] text-[#644937] border border-[#cc9d85]",
-  NextJs: "bg-[#e7e7e7] border border-gray-300",
-  React: "bg-[#d6f6ff] text-[#2778bf] border border-[#80baec]",
-  API: "bg-[#ffd4d4] text-[#9e5353] border border-[#e2a4a4]",
-  Js: "bg-[#fff4a2] text-[#95763c] border border-[#dec28c]",
+  Award: "bg-[#f7f1e3] text-[#7a5f1c] border border-[#e9dcb8]",
+  AI: "bg-[#f3eff9] text-[#5b3f94] border border-[#ddd2f0]",
+  Team: "bg-[#e8f5f1] text-[#2a6a5a] border border-[#c5e4db]",
+  Personal: "bg-[#f6eef5] text-[#7a466c] border border-[#e8d2e2]",
+  Leader: "bg-[#eceff9] text-[#3e4d8c] border border-[#d0d7ef]",
+  NextJs: "bg-[#f1f2f4] text-[#3a4654] border border-[#dcdfe5]",
+  React: "bg-[#e9f3f9] text-[#2c5f80] border border-[#c8e0ee]",
+  API: "bg-[#f9eeec] text-[#8a463e] border border-[#edd1cc]",
+  Js: "bg-[#f6f4e4] text-[#6a6122] border border-[#e3dfb8]",
 };
 
 type TagColorType = {

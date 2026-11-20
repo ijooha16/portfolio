@@ -1,0 +1,23 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "portfolio",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "NODE_OPTIONS=--no-experimental-webstorage pnpm dev"],
+      "port": 3000
+    },
+    {
+      "name": "ody-latest",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "cd /Users/juhayoon/Desktop/SSAFY/ody/ody-latest/frontend && NODE_OPTIONS=--no-experimental-webstorage npx next dev -p 3001"],
+      "port": 3001
+    },
+    {
+      "name": "ody-public",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "cd /Users/juhayoon/Desktop/00-Programming/00-git-repository/ody-music-map && NODE_OPTIONS=--no-experimental-webstorage npx next dev -p 3002"],
+      "port": 3002
+    }
+  ]
+}

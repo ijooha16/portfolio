@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 
-/** 화면에 보일 때만 재생하는 무음 반복 영상 */
 const VideoPlayer = ({ src, poster }: { src: string; poster?: string }) => {
   const ref = useRef<HTMLVideoElement>(null);
 
