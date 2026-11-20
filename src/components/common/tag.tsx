@@ -33,6 +33,8 @@ const Tag = ({
 export default Tag;
 
 const tagColor: TagColorType = {
+  Award: "bg-[#ffeeb8] text-[#8a6100] border border-[#e8c55c]",
+  AI: "bg-[#e3e0ff] text-[#4b3fb5] border border-[#a9a0f0]",
   Team: "bg-[#c7e8ca] text-[#37643d] border border-[#85cc8f]",
   Personal: "bg-[#dac7e8] text-[#65467e] border border-[#af96c1]",
   Leader: "bg-[#dfc6b4] text-[#644937] border border-[#cc9d85]",

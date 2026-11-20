@@ -27,7 +27,20 @@ const ProjectList = ({ project }: { project: ProjectType }) => {
             ))}
           </div>
         </div>
-        <div className="text-sm pl-2 mt-1 mb-5 whitespace-pre-line">
+        <div className="text-xs text-gray-500 pl-2 flex flex-wrap gap-x-2">
+          <span>{project.period}</span>
+          <span className="text-gray-300">|</span>
+          <span>{project.role}</span>
+          {project.award && (
+            <>
+              <span className="text-gray-300">|</span>
+              <span className="font-semibold text-[#8a6100]">
+                {project.award}
+              </span>
+            </>
+          )}
+        </div>
+        <div className="text-sm pl-2 mt-3 mb-5 whitespace-pre-line">
           {project.description}
         </div>
         <div>

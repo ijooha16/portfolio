@@ -1,4 +1,6 @@
 export const TAGS = {
+  AWARD: "Award",
+  AI: "AI",
   TEAM: "Team",
   PERSONAL: "Personal",
   LEADER: "Leader",
