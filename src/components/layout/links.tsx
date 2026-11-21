@@ -10,7 +10,7 @@ const Links = ({
 }) => {
   const pathname = usePathname();
 
-  const pages: Page[] = [PAGES.HOME, PAGES.ABOUT, PAGES.PROJECTS];
+  const pages: Page[] = [PAGES.ABOUT, PAGES.PROJECTS];
 
   return (
     <>
@@ -26,7 +26,7 @@ const Links = ({
                 : "text-gray-400 hover:text-black hover:scale-105 transition-default"
             }`}
         >
-          {page === "/" ? "HOME" : page.slice(1, page.length).toUpperCase()}
+          {page.slice(1, page.length).toUpperCase()}
         </Link>
       ))}
     </>

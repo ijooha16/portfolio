@@ -1,36 +1,13 @@
+const DEVICON = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons";
+
 export const stacks: Stack[] = [
-  {
-    alt: "Nextjs",
-    src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg",
-  },
-  {
-    alt: "Typescript",
-    src: "https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg",
-  },
-  {
-    alt: "React",
-    src: "https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg",
-  },
-  // {
-  //   alt: "Js",
-  //   src: "https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-plain.svg",
-  // },
-  // {
-  //   alt: "CSS",
-  //   src: "https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg",
-  // },
-  // {
-  //   alt: "HTML",
-  //   src: "https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg",
-  // },
-  {
-    alt: "Figma",
-    src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg",
-  },
-  // {
-  //   alt: "Ps",
-  //   src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/photoshop/photoshop-original.svg",
-  // },
+  { alt: "Next.js", src: `${DEVICON}/nextjs/nextjs-original.svg` },
+  { alt: "React", src: `${DEVICON}/react/react-original.svg` },
+  { alt: "TypeScript", src: `${DEVICON}/typescript/typescript-original.svg` },
+  { alt: "Java", src: `${DEVICON}/java/java-original.svg` },
+  { alt: "Spring Boot", src: `${DEVICON}/spring/spring-original.svg` },
+  { alt: "Supabase", src: `${DEVICON}/supabase/supabase-original.svg` },
+  { alt: "Figma", src: `${DEVICON}/figma/figma-original.svg` },
 ];
 
 export type Stack = {

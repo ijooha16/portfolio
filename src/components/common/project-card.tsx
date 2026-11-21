@@ -2,14 +2,22 @@ import React from "react";
 import { ProjectType } from "@/data/projects";
 import Link from "next/link";
 import Tag from "./tag";
+import AutoVideo from "./auto-video";
 
 const ProjectCard = ({ project }: { project: ProjectType }) => {
   return (
     <Link
       href={`projects/${project.id}`}
-      className="relative flex flex-col shrink-0 justify-between py-6 px-5 bg-cover bg-center cursor-pointer w-full h-60 rounded-xl shadow-md hover:translate-y-1 transition-default"
-      style={{ backgroundImage: `url(${project.img.main.url})` }}
+      className="relative overflow-hidden flex flex-col shrink-0 justify-between py-6 px-5 bg-cover bg-center cursor-pointer w-full h-60 rounded-xl shadow-md hover:translate-y-1 transition-default"
+      style={project.img.video ? undefined : { backgroundImage: `url(${project.img.main.url})` }}
     >
+      {project.img.video && (
+        <AutoVideo
+          src={project.img.video}
+          poster={project.img.poster}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      )}
       <div className="flex gap-2 z-5 flex-wrap">
         {project.tags.map((tag) => (
           <Tag key={tag} tag={tag} noDecoration />
@@ -19,7 +27,7 @@ const ProjectCard = ({ project }: { project: ProjectType }) => {
         <div className="text-xl font-bold text-white">{project.title}</div>
         <div className="text-gray-300">{project.summary}</div>
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-[#000000e0] to-transparent  w-full h-60 rounded-xl"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-[#000000e0] to-transparent w-full h-60 rounded-xl"></div>
     </Link>
   );
 };
