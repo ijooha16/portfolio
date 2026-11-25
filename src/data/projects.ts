@@ -85,8 +85,8 @@ export const projects: ProjectType[] = [
       },
       {
         type: "image",
-        src: "/projects/ody/map.jpg",
-        caption: "별 하나가 곡 하나, 오른쪽은 곡 상세와 재생 중인 플레이어",
+        src: "/projects/ody/player-detail.jpg",
+        caption: "성운 레이어에서 곡을 선택하면 오른쪽에 곡 상세와 플레이어가 표시된다",
       },
     ],
     decisions: [
