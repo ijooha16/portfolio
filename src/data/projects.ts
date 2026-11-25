@@ -75,7 +75,7 @@ export const projects: ProjectType[] = [
         type: "video",
         src: "/projects/ody/demo.mp4",
         poster: "/projects/ody/demo-poster.jpg",
-        caption: "우주에서 곡 무리로 확대 → 곡 상세 → 재생 → 레이어 파고들기 (최신 버전, 데모 모드 녹화)",
+        caption: "앨범 커버가 표시되는 음악 지도에서 곡을 탐색하고 상세 정보를 확인하는 데모",
       },
       {
         type: "video",
