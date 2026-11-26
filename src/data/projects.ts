@@ -42,11 +42,11 @@ export const projects: ProjectType[] = [
     headlines: {
       demo: "지도를 떠나지 않고 곡 상세와 여정 탐색까지 이어집니다.",
       overview: "약 450만 곡을 소리의 유사도로 배치해 음악 지도를 만들었습니다.",
-      decisions: "곡 상세부터 여정 탐색까지 하나의 지도에서 이어지도록 설계했습니다.",
-      techs: "곡을 Canvas 2D에 그리고, 프레임 예산을 기준으로 병목을 찾았습니다.",
-      implementations: "다음 레이어로 들어갔을 때 화면에 들어오는 곡의 비율을 40%에서 96%로 높였습니다.",
-      results: "배경 그리기 비용을 줄이고, 재방문 시 지도 첫 곡을 더 빨리 표시했습니다.",
-      troubleshooting: "줌할 때 한 프레임에 교체되는 앨범 커버를 최대 7개에서 1개로 줄였습니다.",
+      decisions: "소리의 유사도로 곡을 배치하고, 확대와 곡 탐색이 하나의 지도에서 이어지도록 설계했습니다.",
+      techs: "곡을 Canvas로 그리고, BFF로 지도 데이터를 전달하며, WebSocket으로 탐색을 동기화했습니다.",
+      implementations: "프론트엔드 구현 · 지도 확대와 실시간 따라가기",
+      results: "재방문과 렌더링을 빠르게 하고, 확대 후 화면에 들어오는 곡의 비율을 높였습니다.",
+      troubleshooting: "앨범 커버가 깜빡이는 원인을 찾아 교체를 줄이고, 배경 별의 그리기 비용을 낮췄습니다.",
     },
     charts: [
       {
@@ -126,6 +126,7 @@ export const projects: ProjectType[] = [
     techs: [
       {
         title: "Canvas 2D & TypedArray",
+        reason: "곡마다 DOM 요소를 두면 확대·이동할 때 각 요소의 위치를 갱신해야 합니다. 별과 커버를 계속 다시 그리는 지도라 Canvas 한 장에 모으고, 반복해서 읽는 좌표는 Float32Array에 담았습니다.",
         description:
           "곡마다 DOM 요소를 만드는 대신 **Canvas 2D 한 장**에 별을 그리고, 좌표는 **Float32Array**에 저장했습니다. 화면 안 곡 중 격자별로 고른 대표곡을 강조하고, 나머지는 흐린 별로 표시합니다.",
         points: [
@@ -135,6 +136,15 @@ export const projects: ProjectType[] = [
       },
       {
         title: "Next.js Route Handler (BFF)",
+        diagram: {
+          title: "BFF 지도 데이터 흐름",
+          caption: "실데이터를 쓰는 환경과 목데이터를 쓰는 공개 데모 모두 화면에 같은 MapPoint 형식을 전달합니다.",
+          paths: [
+            { label: "백엔드 연동", steps: ["지도 화면 요청", "/bff/map/songs", "백엔드 곡 목록을 MapPoint로 변환", "지도에 곡 표시"] },
+            { label: "공개 데모", steps: ["지도 화면 요청", "/bff/map/songs", "MapPoint 형식의 목데이터 반환", "지도에 곡 표시"] },
+          ],
+        },
+        reason: "화면에서 실 API와 데모 데이터를 각각 다루면 소스별 변환이 화면 코드에 남습니다. Next.js 서버에서 응답을 맞춰 화면은 MapPoint만 처리하게 했습니다.",
         description:
           "화면은 **/bff/map/songs**를 호출합니다. BFF는 백엔드 곡 목록을 화면이 쓰는 MapPoint로 변환하거나, 백엔드 연동을 끄면 같은 형식의 목데이터를 반환합니다.",
         points: [
@@ -144,6 +154,7 @@ export const projects: ProjectType[] = [
       },
       {
         title: "STOMP / WebSocket · YouTube IFrame",
+        reason: "폴링은 다음 요청까지 인솔자의 이동과 재생 변경을 기다려야 합니다. 변경을 바로 받아야 해서 Spring 백엔드와 STOMP 구독 경로를 맞추고, 재생과 위치 이동은 YouTube IFrame API로 제어했습니다.",
         description:
           "인솔자의 지도 이동·재생 상태는 **STOMP over WebSocket**으로 보냅니다. 참여자는 구독한 큐의 이벤트로 지도 상태를 갱신하고, 재생 위치를 보정해 **YouTube IFrame** 플레이어에 반영합니다.",
         points: [
@@ -174,6 +185,7 @@ export const projects: ProjectType[] = [
     troubleshooting: [
       {
         title: "줌할 때 깜빡이는 앨범 커버",
+        decision: "기존 커버에 유지 우선순위를 주고, 겹치는 후보를 걸러낸 뒤 새 커버를 프레임당 한 장씩 추가했습니다. 격자는 대표곡을 고르는 데 계속 사용했습니다.",
         problem:
           "줌할 때 앨범 커버가 **불규칙하게 사라졌다 다시 나타났습니다.** 발생 조건이 일정하지 않았고, 캔버스에 그려지는 커버의 교체 수를 DOM에서 확인하기 어려웠습니다.",
         cause:
@@ -181,7 +193,6 @@ export const projects: ProjectType[] = [
         process: [
           "**drawImage 호출을 후킹**해 프레임별 커버 교체를 기록하고, 한 프레임에 최대 **7장**이 바뀌는 것을 확인",
           "직전 프레임에 표시한 커버에 **유지 우선순위(히스테리시스)**를 부여",
-          "겹치는 커버를 제거하고 새 커버를 **프레임당 한 장씩** 추가",
         ],
         result: [
           "프레임당 최대 교체 수 **7개 → 1개** (줌 배율 21.8 → 34.2 구간에서 동일한 방식으로 측정)",
@@ -194,6 +205,7 @@ export const projects: ProjectType[] = [
       },
       {
         title: "배경 별 렌더링 비용 절감",
+        decision: "크기와 투명도를 바꾼 측정 결과를 보고, 먼 배경 두 겹을 미리 합성해 그리기 호출을 줄이기로 했습니다. 합성 타일은 CSS 픽셀 크기로 만들었습니다.",
         problem:
           "지도에 표시하는 곡 수를 늘리는 과정에서 **프레임 처리 시간이 60fps 기준 예산을 넘어서는 문제**를 확인했습니다.",
         cause:
@@ -201,7 +213,6 @@ export const projects: ProjectType[] = [
         process: [
           "Chrome 성능 프로파일에서 렌더링 시간을 항목별로 나눠 배경 렌더링 비용을 확인",
           "별 크기와 투명도를 각각 줄여 측정했으나 더 느려져, **그리기 호출 횟수**를 줄이는 방법을 검토",
-          "멀리 있는 배경 별 두 겹을 **한 장의 이미지로 미리 합성**하고, CSS 픽셀 크기로 만들어 메모리 사용량을 절감",
         ],
         result: [
           "프레임당 배경 그리기 시간 **6.94ms → 4.52ms**",
@@ -217,6 +228,9 @@ export const projects: ProjectType[] = [
           ],
         },
       },
+    ],
+    lessons: [
+      { title: "기기별 렌더링 검증", content: "다음에는 같은 줌 동작을 자동 재현해 여러 기기의 프레임 시간과 커버 교체 수를 비교하고 싶습니다." },
     ],
   },
   // 타짝
@@ -251,9 +265,9 @@ export const projects: ProjectType[] = [
     headlines: {
       demo: "팀원 수만큼 나뉜 자판으로 같은 단어를 함께 칩니다.",
       overview: "12일 동안 혼자 기획부터 배포까지 끝내 가입자 121명을 모았습니다.",
-      techs: "모든 키를 DB 함수 한 곳에서 판정해 점수가 어긋날 수 없습니다.",
-      implementations: "설계와 검증은 직접, 구현은 Claude Code와 나눠 진행했습니다.",
-      troubleshooting: "실제 기록을 재현해 오타 오판 4개를 0개로 고쳤습니다.",
+      techs: "입력은 실시간으로 공유하고, DB 판정 규칙은 통합 테스트로 검증했습니다.",
+      implementations: "키 입력을 즉시 표시하고 팀원 이탈에 대응했으며, AI와 작성한 코드는 자동 검사로 검증했습니다.",
+      troubleshooting: "실제 플레이에서 발생한 오타 오판과 팀원 입력 지연을 개선했습니다.",
     },
     img: {
       main: { url: "/projects/tajjak/main.jpg", alt: "타짝 게임 화면" },
@@ -269,6 +283,7 @@ export const projects: ProjectType[] = [
     techs: [
       {
         title: "Supabase Realtime (WebSocket)",
+        reason: "폴링은 다음 요청까지 키 표시가 늦어집니다. 바로 다음 글자를 쳐야 하는 팀전이라 입력은 팀 채널로 먼저 보내고, 확정 판정은 방 채널로 공유했습니다.",
         description:
           "판정 결과는 **방 채널**, 키 입력은 **팀 채널**로 바로 보낸다. **Presence**로 접속·이탈을 감지한다.",
         points: [
@@ -278,6 +293,15 @@ export const projects: ProjectType[] = [
       },
       {
         title: "Postgres RPC · 서버 권위 판정",
+        diagram: {
+          title: "타짝 키 입력과 서버 판정",
+          caption: "한 번의 키 입력은 임시 표시와 확정 판정으로 나뉩니다. 화면은 서버가 확인한 키를 임시 목록에서 빼고 남은 입력만 다시 반영합니다.",
+          paths: [
+            { label: "임시 표시", steps: ["키 입력", "내 화면에 바로 표시", "팀 채널로 전달", "팀원 화면에 임시 표시"] },
+            { label: "확정 판정", steps: ["키와 입력 시각 전송", "Postgres RPC에서 방 단위 판정", "점수·진행 상태 및 처리 번호 전달", "확정 상태에 남은 임시 입력 재적용"] },
+          ],
+        },
+        reason: "브라우저마다 점수를 계산하면 입력 도착 순서에 따라 결과가 갈릴 수 있습니다. DB 함수 한 곳에서 판정하고, 화면은 처리 번호를 받아 임시 표시를 맞췄습니다.",
         description:
           "모든 키를 **DB 함수 한 곳**에서 판정하고, **방 단위로 잠가** 한 줄로 처리한다.",
         points: [
@@ -287,6 +311,7 @@ export const projects: ProjectType[] = [
       },
       {
         title: "PGlite · DB 통합 테스트",
+        reason: "함수를 목으로 대체하면 실제 SQL이 어떤 키를 거절하는지 검증하기 어렵습니다. PGlite에서 실제 스키마와 판정 함수를 실행해 입력 오류를 재현했습니다.",
         description:
           "운영 중인 스키마 위에 새 SQL을 덮어써서 **실제 기록 순서 그대로** 재현한다.",
         points: ["2·4·10인 e2e, 회원가입 시뮬레이션"],
@@ -324,6 +349,7 @@ export const projects: ProjectType[] = [
     troubleshooting: [
       {
         title: "맞게 쳤는데 오타가 뜬다",
+        decision: "보정된 입력 시각으로 순서를 정하고, 차례보다 먼저 누른 키는 보관했다가 차례가 오면 처리하도록 바꿨습니다.",
         problem:
           "팀전에서 맞는 키를 눌렀는데 **오타가 뜨고 안 쳐진다**. 둘 다 '쳤는데?' 하고 기다리다 단어가 멈춘다. 실제 기록: 한 단어에서 **3.7초, 7.5초** 정지.",
         cause:
@@ -331,7 +357,6 @@ export const projects: ProjectType[] = [
         process: [
           "키마다 **누른 시각**을 함께 보내 **누른 순서**로 판정",
           "내 기기와 서버의 시계 차이를 **접속 시 5번, 이후 30초마다** 재서 보정 (한 번만 재면 최대 280ms 어긋남)",
-          "차례보다 먼저 친 글자는 버리지 않고 **들고 있다가** 차례가 오면 인정",
         ],
         result: [
           "'국제선' 실제 기록 재현: 오타 처리 **4개 → 0개**",
@@ -344,13 +369,13 @@ export const projects: ProjectType[] = [
       },
       {
         title: "팀원 키가 늦게 보인다",
+        decision: "팀 채널로 임시 입력을 먼저 보여주고, 점수와 단어 진행은 서버 판정으로 확정했습니다. 3초 안에 서버 확인이 오지 않으면 임시 입력을 취소합니다.",
         problem:
           "팀원이 키를 눌러도 내 화면엔 **0.19~0.55초** 뒤에 보인다. 팀원 다음이 내 차례인데 화면이 늦어 **박자가 끊긴다**.",
         cause:
           "팀원 키가 **'서버 판정 → 방 전체 공유'**를 거쳐야 보였다. 서버 왕복 + 판정 결과 묶음 간격(0.25초) + 전달 시간이 **그대로 쌓였다**.",
         process: [
           "누르는 순간 **팀 전용 채널**로 팀원에게 바로 전송 (판정은 서버가 따로)",
-          "받은 키를 **먼저 화면에 그리고**, 서버 확인이 오면 정리 (3초 안에 안 오면 취소)",
           "입력 순서 검사를 자동 점검(npm run check)에 추가",
         ],
         result: [
@@ -370,6 +395,9 @@ export const projects: ProjectType[] = [
           ],
         },
       },
+    ],
+    lessons: [
+      { title: "실시간 입력 검증", content: "다음에는 지연과 재접속이 겹쳐도 임시 입력이 서버 판정과 다시 일치하는지 자동으로 검증하고 싶습니다." },
     ],
   },
   // 돌잡이
@@ -423,7 +451,7 @@ export const projects: ProjectType[] = [
       demo: "캡슐 인체 모델이 복원한 실제 벽에서 동작을 따라 오릅니다.",
       overview: "예측 모델이 쓸 데이터와 검증 기준을 함께 만들었습니다.",
       decisions: "판정 이유를 설명할 수 있는 캡슐 모델 하나로 기준을 정했습니다.",
-      implementations: "실제 성공 동작 42개 중 38개를 가능으로, 불가능 동작 10개는 모두 걸렀습니다.",
+      implementations: "학습 영상에 손발과 홀드 위치를 기록하는 도구를 만들고, 추천 동작의 가능 여부를 시뮬레이션으로 판정했습니다.",
       results: "라벨링을 영상당 3~5분으로 줄이고, 실제 성공 동작의 90%를 가능으로 판정했습니다.",
       troubleshooting: "시뮬레이션이 영상 데이터의 홀드 번호 오류 13건을 찾아냈습니다.",
     },
@@ -452,6 +480,13 @@ export const projects: ProjectType[] = [
         type: "image",
         src: "/projects/doljabi/judge.jpg",
         caption: "같은 자세라도 물리 판정으로 실패 / 가능을 가른다",
+      },
+    ],
+    techs: [
+      {
+        title: "MuJoCo 캡슐 인체 모델",
+        description: "복원한 벽에서 관절 힘, 홀드와의 마찰, 자세 균형을 기준으로 동작을 판정했습니다.",
+        reason: "MyoSuite는 계산이 느리고 판정 편차가 있었고, Isaac은 손발이 벽에 닿을 때 계산이 불안정했습니다. 후보를 반복 검사하면서 실패 원인을 관절 단위로 설명할 수 있어 MuJoCo 캡슐 모델을 골랐습니다.",
       },
     ],
     decisions: [
@@ -489,6 +524,7 @@ export const projects: ProjectType[] = [
     troubleshooting: [
       {
         title: "시뮬레이션으로 찾아낸 데이터 오류",
+        decision: "판정 규칙을 그대로 두고, 원본 영상과 대조해 잘못 기록된 홀드 번호를 고친 뒤 다시 판정했습니다.",
         problem:
           "처음 보는 실제 성공 동작인데도 시뮬레이션에서 **불가능으로 나오는 경우**가 반복됐다.",
         cause:
@@ -506,6 +542,9 @@ export const projects: ProjectType[] = [
           rings: [{ label: "처음 보는 성공 동작을 가능으로 판정", value: 27, total: 30, caption: "데이터 오류 수정 후" }],
         },
       },
+    ],
+    lessons: [
+      { title: "라벨 단계에서 입력 검증", content: "판정 오류를 줄이기 위해 다음에는 영상 속 손발 위치와 홀드 번호를 검수 단계에서 교차 확인하고 싶습니다." },
     ],
   },
   // Smookie
@@ -548,10 +587,9 @@ export const projects: ProjectType[] = [
     headlines: {
       demo: "감정 쿠키 캘린더와 감정 통계로 한 달을 돌아봅니다.",
       overview: "4주 동안 6명 팀을 이끌어 12팀 중 1위로 대상을 받았습니다.",
-      techs: "쿼리 15개와 뮤테이션 11개를 하나의 캐시로 관리했습니다.",
-      implementations: "캘린더에서 고른 날짜로 바로 가는 양방향 무한 스크롤을 만들었습니다.",
+      techs: "TanStack Query로 데이터를 관리하고, 폴링으로 친구 기록을 갱신하며, Framer Motion으로 화면에 움직임을 더했습니다.",
+      implementations: "날짜별 기록 탐색, 감정 통계, 친구의 최신 기록을 구현했습니다.",
       troubleshooting: "발표 며칠 전, 쪼개진 캐시를 합쳐 전 기능 시연을 지켰습니다.",
-      lessons: "팀장을 맡으며 초반 설계와 합의가 재작업을 줄인다는 것을 배웠습니다.",
     },
     img: {
       main: { url: "/smookie_image.png", alt: "Smookie 메인" },
@@ -582,6 +620,7 @@ export const projects: ProjectType[] = [
     techs: [
       {
         title: "TanStack Query & QUERY_KEY",
+        reason: "화면마다 fetch와 로컬 상태를 두면 일기나 친구 정보가 바뀔 때 갱신할 화면을 개별 관리해야 합니다. 공통 키로 캐시를 공유하고, 변경과 관련된 쿼리를 무효화하도록 구성했습니다.",
         description:
           "일기·친구·음악 데이터를 여러 화면이 함께 쓰고 계속 바뀐다. 서버 데이터를 **캐시 한 곳에 모아** 관리했다.",
         points: [
@@ -591,6 +630,7 @@ export const projects: ProjectType[] = [
       },
       {
         title: "Polling",
+        reason: "친구 요청과 기록은 몇 초 뒤에 보여도 되는 기능이었습니다. WebSocket 연결과 이벤트 처리 비용을 들이기보다 기존 쿼리를 5초마다 갱신했습니다.",
         description:
           "친구 요청이 새로고침 전엔 보이지 않았다. 초 단위 실시간까지는 필요 없어 **WebSocket 대신 일정 간격으로 다시 묻는 방식**을 골랐다.",
         points: [
@@ -600,6 +640,7 @@ export const projects: ProjectType[] = [
       },
       {
         title: "Framer Motion",
+        reason: "단순 전환은 CSS로 구현할 수 있지만 팝업과 데이터에 따라 바뀌는 그래프까지 4주 안에 만들어야 했습니다. 상태에 따른 모션을 컴포넌트에 선언할 수 있는 Framer Motion을 선택했습니다.",
         description:
           "**'위로'**가 컨셉인 서비스인 만큼 **감성**이 중요했다. 4주 안에 완성도 있는 애니메이션을 내기 위해 라이브러리를 선택했다.",
         points: ["팝업, 배경, 그래프 막대, 더보기 등 전체 애니메이션 구현"],
@@ -633,6 +674,7 @@ export const projects: ProjectType[] = [
     troubleshooting: [
       {
         title: "다른 화면에 반영되지 않는 상태값",
+        decision: "동일 데이터는 키를 통일하고 조회 조건이 다른 데이터는 별도 키로 관리했습니다. 공통 QUERY_KEY를 기준으로 변경된 캐시를 갱신하도록 맞췄습니다.",
         problem:
           "각자 만든 기능을 합치자, 한 화면에서 내용을 고쳐도 다른 화면에는 **새로고침 전까지 예전 값**이 그대로 보였다. **발표 며칠 전**이라 기능을 줄이자는 의견도 나왔다.",
         cause:
@@ -640,7 +682,6 @@ export const projects: ProjectType[] = [
         process: [
           "정해 둔 날짜까지는 해결해 보자고 **팀을 설득**하고, 노션에 모든 오류를 목록화해 담당자 지정",
           "팀원별 쿼리 키를 **노션 표로 모아**, 어떤 데이터를 어디서 쓰는지 한눈에 보이게 함",
-          "같은 데이터를 가리키는 키는 합치고, 조건이 다른 키는 역할에 맞게 분리한 뒤 **QUERY_KEY로 상수화**",
         ],
         result: [
           "같은 닉네임을 두 키로 따로 캐시하던 것을 하나로 합침",
@@ -655,19 +696,8 @@ export const projects: ProjectType[] = [
     ],
     lessons: [
       {
-        title: "리더십 경험: 팀장의 역할과 책임",
-        content:
-          "팀원으로 참여할 때는 내가 맡은 부분에만 집중했지만, 팀장을 맡으면서 **프로젝트의 전체 흐름**을 파악해야 했습니다. 회의를 진행하며 프로젝트가 방향을 잃지 않도록 조율하는 과정과, 팀원들의 의견을 조율하고 타협점을 찾아가는 과정은 재미있으면서도 좋은 경험이 되었습니다. 또한, 일정과 진행상황을 공유하기 위해 보드를 만들고 관리 시스템을 도입하면서 **협업 도구의 중요성**도 느꼈습니다. 해야 할 일은 두 배였지만, 리더로서 팀 분위기와 진행 속도에 큰 영향을 끼친다는 것을 체감했고, **리더십이 팀 성과를 좌우**한다는 점을 배웠습니다.",
-      },
-      {
-        title: "실시간 기능 구현: 작은 기능 속 큰 복잡성",
-        content:
-          "tanstack으로 상태 관리와 최신화는 경험이 있었지만, **서버 트리거를 감지해 알림·메시지를 실시간으로 반영하는 구조**는 처음 구현해봤습니다. 친구 기능만 해도 신청, 수락, 거절, 취소 등 다양한 경우의 수가 얽혀 있었고, 이 모든 흐름을 실시간으로 처리해야 했습니다. 이를 통해 겉보기에 단순해 보이는 기능도 사실은 수많은 디테일이 모여 복잡성을 만든다는 것을 알게 되었고, 실제 서비스에서 **실시간성이 주는 사용자 경험**의 중요성을 배웠습니다.",
-      },
-      {
-        title: "설계의 중요성: 기획 단계에서의 소통과 합의",
-        content:
-          "이전에도 팀 프로젝트 경험은 있었지만, 이번처럼 규모가 큰 프로젝트는 처음이었습니다. 그 결과, 쿼리키나 함수 중복 같은 문제가 발생했고, 결국 중간에 **대규모 리팩토링**을 해야 했습니다. 이를 계기로 **“시작 단계에서의 기획과 설계, 역할 분배”**가 얼마나 중요한지를 뼈저리게 깨달았습니다. 사전에 정리와 합의를 해두는 것이 **불필요한 재작업**을 줄이고, 전체 개발 효율성을 크게 높인다는 사실을 배웠습니다.",
+        title: "개발 전에 쿼리 키 합의",
+        content: "기능 통합 뒤 캐시를 고치느라 수정 범위가 커졌습니다. 다음에는 공통 키와 갱신 규칙을 개발 전에 정하고 화면 간 갱신을 먼저 검증하고 싶습니다.",
       },
     ],
   },
@@ -793,6 +823,12 @@ export type DecisionType = {
 export type TechType = {
   title: string;
   description: string;
+  reason?: string;
+  diagram?: {
+    title: string;
+    caption: string;
+    paths: { label: string; steps: string[] }[];
+  };
   points?: string[];
 };
 
@@ -801,6 +837,7 @@ export type TroubleType = {
   problem: string;
   cause: string;
   process: string[];
+  decision: string;
   result: string[];
   chart?: ChartType;
 };
