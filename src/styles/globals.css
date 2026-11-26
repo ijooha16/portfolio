@@ -19,7 +19,11 @@
   --color-brand-t3: #c7b7e4;
   --color-brand-t4: #e6dff3;
   --color-brand-pale: #f3eff9;
+  --color-stroke: #e6dff3;
   --color-accent: #2ebfa0;
+  --color-accent-stroke: color-mix(in srgb, var(--color-accent) 36%, #fff);
+  --color-accent-pale: color-mix(in srgb, var(--color-accent) 10%, #fff);
+  --color-accent-deep: color-mix(in srgb, var(--color-accent) 45%, #000);
   --color-ink: #222222;
   --color-text: #3a4654;
   --color-mute: #5a6678;

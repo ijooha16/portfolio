@@ -31,7 +31,6 @@ const VideoPlayer = ({ src, poster }: { src: string; poster?: string }) => {
       muted
       loop
       playsInline
-      controls
       preload="metadata"
       className="w-full h-auto block bg-black"
     />
