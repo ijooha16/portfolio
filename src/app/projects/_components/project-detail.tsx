@@ -7,6 +7,7 @@ import {
   ExternalLink,
   FileText,
 } from "lucide-react";
+import Notice from "@/components/common/notice";
 import Tag from "@/components/common/tag";
 import RichText from "@/components/common/rich-text";
 import {
@@ -16,6 +17,7 @@ import {
   TechType,
 } from "@/data/projects";
 import VideoPlayer from "./video-player";
+import DecisionAnimation from "./decision-animation";
 import { Chart } from "./charts";
 
 type Neighbor = Pick<ProjectType, "id" | "title"> | undefined;
@@ -56,43 +58,32 @@ const ProjectDetail = ({
   next: Neighbor;
 }) => {
   const [hero, ...gallery] = project.media ?? [];
-  const hasVideo = project.media?.some((m) => m.type === "video");
+  const galleryContent = gallery.length > 0 && (
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+      {gallery.map((media) => (
+        <Media key={media.src} media={media} />
+      ))}
+    </div>
+  );
 
   const sections: { key: SectionKey; body: ReactNode }[] = [];
-
-  if (hero) {
-    sections.push({
-      key: "demo",
-      body: (
-        <div className="flex flex-col gap-6">
-          <Media media={hero} priority />
-          {gallery.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {gallery.map((m) => (
-                <Media key={m.src} media={m} />
-              ))}
-            </div>
-          )}
-        </div>
-      ),
-    });
-  }
 
   if (project.decisions) {
     sections.push({
       key: "decisions",
       body: (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className={`grid grid-cols-1 gap-5 ${project.id === 8 ? "sm:grid-cols-2 lg:grid-cols-3" : "md:grid-cols-2"}`}>
           {project.decisions.map((d, idx) => (
             <Card key={d.title} className="flex flex-col gap-4">
-              <div className="flex items-baseline gap-3">
+              <div className={`flex ${d.illustration ? "flex-col gap-1" : "items-baseline gap-3"}`}>
                 <span className="text-xl font-bold text-brand">
                   {pad(idx + 1)}
                 </span>
-                <span className="text-lg font-bold text-ink break-keep">
+                <span className={`text-lg font-bold text-ink break-keep ${d.illustration ? "sm:min-h-14" : ""}`}>
                   {d.title}
                 </span>
               </div>
+              {d.illustration && <DecisionAnimation kind={d.illustration} />}
               <Labeled label="고민">{d.problem}</Labeled>
               <Labeled label="결정">{d.decision}</Labeled>
               <Labeled label="결과">{d.result}</Labeled>
@@ -263,20 +254,14 @@ const ProjectDetail = ({
 
   return (
     <article className="w-full max-w-5xl flex flex-col gap-20 md:gap-28">
-      <Hero project={project} />
+      <Hero project={project} media={hero} />
+      {galleryContent}
 
       {sections.map((section, idx) => (
         <Section
           key={section.key}
-          chapter={`${pad(idx + 1)} · ${
-            section.key === "demo" && !hasVideo ? "SCREENS" : LABEL[section.key]
-          }`}
-          title={
-            project.headlines?.[section.key] ??
-            (section.key === "demo" && !hasVideo
-              ? "서비스 화면"
-              : DEFAULT_TITLE[section.key])
-          }
+          chapter={`${pad(idx + 1)} · ${LABEL[section.key]}`}
+          title={project.headlines?.[section.key] ?? DEFAULT_TITLE[section.key]}
         >
           {section.body}
         </Section>
@@ -316,7 +301,7 @@ const ProjectDetail = ({
 
 export default ProjectDetail;
 
-const Hero = ({ project }: { project: ProjectType }) => {
+const Hero = ({ project, media }: { project: ProjectType; media?: MediaType }) => {
   const { links } = project;
   const hasLink = links.service || links.repository || links.presentation;
 
@@ -324,19 +309,40 @@ const Hero = ({ project }: { project: ProjectType }) => {
     <header className="flex flex-col gap-5">
 
       <span className="block w-10 h-1 rounded-full bg-accent" />
-      <div className="flex items-center gap-4">
-        {project.img.logo && (
-          <Image
-            src={project.img.logo}
-            alt={`${project.title} 로고`}
-            width={64}
-            height={64}
-            className="w-12 h-12 md:w-16 md:h-16 object-contain rounded-xl"
-          />
+      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+        <div className="flex items-center gap-4">
+          {project.img.logo && (
+            <Image
+              src={project.img.logo}
+              alt={`${project.title} 로고`}
+              width={64}
+              height={64}
+              className="w-12 h-12 md:w-16 md:h-16 object-contain rounded-xl"
+            />
+          )}
+          <h1 className="text-4xl md:text-6xl font-bold text-ink">
+            {project.title}
+          </h1>
+        </div>
+        {hasLink && (
+          <div className="flex flex-wrap items-center gap-2">
+            {links.service && (
+              <LinkButton href={links.service} primary>
+                <ExternalLink size={16} /> {project.id === 8 ? "데모 보기" : "서비스 둘러보기"}
+              </LinkButton>
+            )}
+            {links.repository && (
+              <LinkButton href={links.repository}>
+                <GithubIcon /> GitHub
+              </LinkButton>
+            )}
+            {links.presentation && (
+              <LinkButton href={links.presentation}>
+                <FileText size={16} /> 발표자료
+              </LinkButton>
+            )}
+          </div>
         )}
-        <h1 className="text-4xl md:text-6xl font-bold text-ink">
-          {project.title}
-        </h1>
       </div>
       <p className="text-lg md:text-2xl font-semibold text-text break-keep">
         {project.summary}
@@ -346,6 +352,19 @@ const Hero = ({ project }: { project: ProjectType }) => {
           <Tag key={tag} tag={tag} />
         ))}
       </div>
+
+      <dl className={`flex flex-col gap-3 pt-2 ${project.id === 8 ? "" : "max-w-3xl"}`}>
+        <SummaryRow label="기간" value={project.period} />
+        {project.context && <SummaryRow label="소속" value={project.context} />}
+        <SummaryRow label="역할" value={project.role} detail={project.roleDetail} />
+        <SummaryRow label="인원" value={project.team} />
+        {project.award && <SummaryRow label="성과" value={project.award} />}
+        <SummaryRow label="기술" value={project.stacks.join(" · ")} />
+      </dl>
+
+      {media && (
+        <Media media={media} priority odyService={project.id === 8 ? links.service : undefined} />
+      )}
 
       <div className="flex flex-col gap-8 pt-4 max-w-3xl">
         <p className="whitespace-pre-line leading-8 text-ink break-keep">
@@ -372,35 +391,7 @@ const Hero = ({ project }: { project: ProjectType }) => {
           })}
         </div>
 
-        <dl className="flex flex-col gap-3 pt-6 border-t border-[#e6e8ec]">
-          <SummaryRow label="기간" value={project.period} />
-          {project.context && <SummaryRow label="소속" value={project.context} />}
-          <SummaryRow label="역할" value={project.role} detail={project.roleDetail} />
-          <SummaryRow label="인원" value={project.team} />
-          {project.award && <SummaryRow label="성과" value={project.award} />}
-          <SummaryRow label="기술" value={project.stacks.join(" · ")} />
-        </dl>
       </div>
-
-      {hasLink && (
-        <div className="flex flex-wrap items-center gap-2">
-          {links.service && (
-            <LinkButton href={links.service} primary>
-              <ExternalLink size={16} /> 서비스 둘러보기
-            </LinkButton>
-          )}
-          {links.repository && (
-            <LinkButton href={links.repository}>
-              <GithubIcon /> GitHub
-            </LinkButton>
-          )}
-          {links.presentation && (
-            <LinkButton href={links.presentation}>
-              <FileText size={16} /> 발표자료
-            </LinkButton>
-          )}
-        </div>
-      )}
     </header>
   );
 };
@@ -469,12 +460,14 @@ const GithubIcon = () => (
 const Media = ({
   media,
   priority = false,
+  odyService,
 }: {
   media: MediaType;
   priority?: boolean;
+  odyService?: string;
 }) => (
   <figure className="flex flex-col gap-3">
-    <div className="rounded-2xl overflow-hidden shadow-default bg-white">
+    <div className="relative rounded-2xl overflow-hidden shadow-default bg-white">
       {media.type === "video" ? (
         <VideoPlayer src={media.src} poster={media.poster} />
       ) : (
@@ -488,10 +481,27 @@ const Media = ({
           className="w-full h-auto block"
         />
       )}
+      {odyService && (
+        <Link
+          href={odyService}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute inset-0 flex items-center justify-center gap-2 bg-[#000]/70 font-semibold text-white opacity-100 transition-opacity motion-reduce:transition-none supports-[selector(:focus-visible)]:focus-visible:opacity-100 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:hover:opacity-100"
+        >
+          <Image src="/projects/ody/ship.png" alt="" width={36} height={36} className="size-9 object-contain" />
+          데모 보기
+        </Link>
+      )}
     </div>
-    <figcaption className="text-sm text-mute px-1 break-keep">
-      {media.caption}
-    </figcaption>
+    {media.caption && (
+      <figcaption className={odyService ? undefined : "text-sm text-mute px-1 break-keep"}>
+        {odyService ? (
+          <Notice tone="teal"><RichText text={media.caption} /></Notice>
+        ) : (
+          <RichText text={media.caption} />
+        )}
+      </figcaption>
+    )}
   </figure>
 );
 
