@@ -2,7 +2,6 @@ import { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowDown,
   ArrowLeft,
   ArrowRight,
   ExternalLink,
@@ -15,7 +14,6 @@ import {
   MediaType,
   ProjectType,
   SectionKey,
-  TechType,
 } from "@/data/projects";
 import VideoPlayer from "./video-player";
 import DecisionAnimation from "./decision-animation";
@@ -24,27 +22,17 @@ import { Chart } from "./charts";
 type Neighbor = Pick<ProjectType, "id" | "title"> | undefined;
 
 const LABEL: Record<SectionKey, string> = {
-  demo: "DEMO",
-  overview: "OVERVIEW",
   results: "RESULTS",
-  decisions: "DESIGN DECISIONS",
-  techs: "TECH",
-  implementations: "IMPLEMENTATION",
-  troubleshooting: "TROUBLE SHOOTING",
+  decisions: "DESIGN",
+  troubleshooting: "TROUBLESHOOTING",
   achievements: "ACHIEVEMENTS",
-  lessons: "LESSONS",
 };
 
 const DEFAULT_TITLE: Record<SectionKey, string> = {
-  demo: "실제 사용 화면",
-  overview: "프로젝트 개요",
   results: "숫자로 본 결과",
-  decisions: "기획·디자인 결정",
-  techs: "사용 기술",
-  implementations: "구현 사항",
+  decisions: "주요 설계",
   troubleshooting: "트러블슈팅",
   achievements: "주요 성과",
-  lessons: "회고와 다음 개선",
 };
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -73,14 +61,14 @@ const ProjectDetail = ({
     sections.push({
       key: "decisions",
       body: (
-        <div className={`grid grid-cols-1 gap-5 ${project.id === 8 ? "sm:grid-cols-2 lg:grid-cols-3" : "md:grid-cols-2"}`}>
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           {project.decisions.map((d, idx) => (
             <Card key={d.title} className="flex flex-col gap-4">
-              <div className={`flex ${d.illustration ? "flex-col gap-1" : "items-baseline gap-3"}`}>
+              <div className="flex items-baseline gap-3">
                 <span className="text-xl font-bold text-brand">
                   {pad(idx + 1)}
                 </span>
-                <span className={`text-lg font-bold text-ink break-keep ${d.illustration ? "sm:min-h-14" : ""}`}>
+                <span className="text-lg font-bold text-ink break-keep">
                   {d.title}
                 </span>
               </div>
@@ -92,54 +80,6 @@ const ProjectDetail = ({
           ))}
         </div>
       ),
-    });
-  }
-
-  if (project.techs) {
-    sections.push({
-      key: "techs",
-      body: (
-        <div className="flex flex-col gap-5">
-          <TechGrid items={project.techs} />
-          {project.techs.map(({ diagram }) => diagram && (
-            <Card key={diagram.title}>
-              <figure className="flex flex-col gap-5">
-                <figcaption>
-                  <h3 className="font-bold text-ink">{diagram.title}</h3>
-                  <p className="mt-1 text-sm leading-6 text-mute break-keep">{diagram.caption}</p>
-                </figcaption>
-                {diagram.paths.map(({ label, steps }) => (
-                  <div key={label} className="flex flex-col gap-2">
-                    <h4 className="text-sm font-bold text-brand">{label}</h4>
-                    <ol className="flex flex-col gap-2 md:grid md:grid-cols-4">
-                      {steps.map((step, index) => (
-                        <li key={step} className="flex flex-col items-stretch gap-2 md:flex-row md:items-center">
-                          {index > 0 && (
-                            <>
-                              <ArrowDown aria-hidden="true" size={14} className="self-center text-brand md:hidden" />
-                              <ArrowRight aria-hidden="true" size={14} className="hidden shrink-0 text-brand md:block" />
-                            </>
-                          )}
-                          <span className="flex-1 rounded-xl bg-surface2 px-3 py-2 text-center text-sm leading-5 text-ink break-keep">
-                            {step}
-                          </span>
-                        </li>
-                      ))}
-                    </ol>
-                  </div>
-                ))}
-              </figure>
-            </Card>
-          ))}
-        </div>
-      ),
-    });
-  }
-
-  if (project.implementations) {
-    sections.push({
-      key: "implementations",
-      body: <ImplementationRows items={project.implementations} />,
     });
   }
 
@@ -207,17 +147,16 @@ const ProjectDetail = ({
                   ))}
                 </div>
               </div>
-              <div className="rounded-lg border border-brand/20 px-5 py-4">
-                <p className="mb-1 text-sm font-bold text-brand">최종 선택</p>
-                <p className="text-sm leading-6 text-text break-keep"><RichText text={t.decision} /></p>
-              </div>
               {(() => {
                 const result = (
                   <div className="rounded-lg bg-surface2 px-5 py-4 flex flex-col gap-2">
                     <span className="text-xs font-bold text-brand-deep tracking-[0.15em]">
                       RESULT
                     </span>
-                    <ul className="flex flex-col gap-1 text-sm text-ink">
+                    <p className="text-sm leading-6 text-text break-keep">
+                      <RichText text={t.decision} />
+                    </p>
+                    <ul className="list-disc space-y-1 pl-5 text-sm leading-6 text-ink marker:text-brand">
                       {t.result.map((r) => (
                         <li key={r} className="break-keep">
                           <RichText text={r} />
@@ -243,6 +182,7 @@ const ProjectDetail = ({
                   </>
                 );
               })()}
+              {t.media && <Media media={t.media} />}
             </Card>
           ))}
         </div>
@@ -270,41 +210,12 @@ const ProjectDetail = ({
     });
   }
 
-  if (project.lessons) {
-    sections.push({
-      key: "lessons",
-      body: (
-        <div className="flex flex-col">
-          {project.lessons.map((l) => (
-            <div
-              key={l.title}
-              className="grid grid-cols-1 md:grid-cols-[4fr_8fr] gap-2 md:gap-8 py-6 border-t border-[#eef0f4] first:border-t-0 first:pt-0"
-            >
-              <div className="font-bold text-ink break-keep">{l.title}</div>
-              <p className="text-sm leading-7 text-text break-keep">
-                <RichText text={l.content} />
-              </p>
-            </div>
-          ))}
-        </div>
-      ),
-    });
-  }
-
-  const odySectionOrder: SectionKey[] = [
-    "implementations", "results", "troubleshooting", "decisions", "techs",
-    "overview", "demo", "achievements", "lessons",
-  ];
-  const orderedSections = project.id === 8
-    ? odySectionOrder.flatMap((key) => sections.filter((section) => section.key === key))
-    : sections;
-
   return (
     <article className="w-full max-w-5xl flex flex-col gap-20 md:gap-28">
       <Hero project={project} media={hero} />
       {galleryContent}
 
-      {orderedSections.map((section, idx) => (
+      {sections.map((section, idx) => (
         <Section
           key={section.key}
           chapter={`${pad(idx + 1)} · ${LABEL[section.key]}`}
@@ -400,7 +311,11 @@ const Hero = ({ project, media }: { project: ProjectType; media?: MediaType }) =
         ))}
       </div>
 
-      <dl className={`flex flex-col gap-3 pt-2 ${project.id === 8 ? "" : "max-w-3xl"}`}>
+      <p className="whitespace-pre-line leading-8 text-ink break-keep">
+        <RichText text={project.description} />
+      </p>
+
+      <dl className="flex max-w-3xl flex-col gap-3 pt-2">
         <SummaryRow label="기간" value={project.period} />
         {project.context && <SummaryRow label="소속" value={project.context} />}
         <SummaryRow label="역할" value={project.role} detail={project.roleDetail} />
@@ -409,36 +324,29 @@ const Hero = ({ project, media }: { project: ProjectType; media?: MediaType }) =
         <SummaryRow label="기술" value={project.stacks.join(" · ")} />
       </dl>
 
+      <div className="flex max-w-3xl flex-col gap-3 pt-4">
+        <span className="text-xs font-bold text-brand tracking-[0.15em]">
+          KEY FEATURES
+        </span>
+        {project.features.map((feature, idx) => {
+          const [name, ...rest] = feature.split(":");
+          return (
+            <div key={feature} className="flex gap-3 text-sm md:text-base">
+              <span className="font-bold text-brand w-6 shrink-0">
+                {pad(idx + 1)}
+              </span>
+              <span className="break-keep">
+                <strong className="text-ink">{name}</strong>
+                <span className="text-mute"> {rest.join(":").trim()}</span>
+              </span>
+            </div>
+          );
+        })}
+      </div>
+
       {media && (
         <Media media={media} priority odyService={project.id === 8 ? links.service : undefined} />
       )}
-
-      <div className="flex flex-col gap-8 pt-4 max-w-3xl">
-        <p className="whitespace-pre-line leading-8 text-ink break-keep">
-          <RichText text={project.description} />
-        </p>
-
-        <div className="flex flex-col gap-3">
-          <span className="text-xs font-bold text-brand tracking-[0.15em]">
-            KEY FEATURES
-          </span>
-          {project.features.map((feature, idx) => {
-            const [name, ...rest] = feature.split(":");
-            return (
-              <div key={feature} className="flex gap-3 text-sm md:text-base">
-                <span className="font-bold text-brand w-6 shrink-0">
-                  {pad(idx + 1)}
-                </span>
-                <span className="break-keep">
-                  <strong className="text-ink">{name}</strong>
-                  <span className="text-mute"> {rest.join(":").trim()}</span>
-                </span>
-              </div>
-            );
-          })}
-        </div>
-
-      </div>
     </header>
   );
 };
@@ -584,64 +492,4 @@ const Labeled = ({ label, children }: { label: string; children: ReactNode }) =>
     <span className="w-8 shrink-0 font-bold text-brand">{label}</span>
     <span className="leading-6 text-text break-keep">{typeof children === "string" ? <RichText text={children} /> : children}</span>
   </div>
-);
-
-const TechGrid = ({ items }: { items: TechType[] }) => (
-  <div
-    className={`grid grid-cols-1 gap-5 ${
-      items.length >= 3 ? "md:grid-cols-3" : items.length === 2 ? "md:grid-cols-2" : ""
-    }`}
-  >
-    {items.map((item) => (
-      <Card key={item.title} className="flex flex-col gap-3">
-        <div className="font-bold text-ink break-keep">{item.title}</div>
-        <p className="text-sm text-mute leading-6 break-keep">
-          <RichText text={item.description} />
-        </p>
-        {item.reason && (
-          <div className="text-sm leading-6 text-text break-keep">
-            <p className="font-bold text-brand">선택 이유</p>
-            <p><RichText text={item.reason} /></p>
-          </div>
-        )}
-        {item.points && (
-          <ul className="flex flex-col gap-1.5 mt-auto pt-3 border-t border-[#eef0f4]">
-            {item.points.map((p) => (
-              <li key={p} className="text-sm text-ink break-keep">
-                <RichText text={p} />
-              </li>
-            ))}
-          </ul>
-        )}
-      </Card>
-    ))}
-  </div>
-);
-
-const ImplementationRows = ({ items }: { items: TechType[] }) => (
-  <Card className="flex flex-col !py-2">
-    {items.map((item) => (
-      <div
-        key={item.title}
-        className="grid grid-cols-1 md:grid-cols-[4fr_8fr] gap-2 md:gap-8 py-6 border-t border-[#eef0f4] first:border-t-0"
-      >
-        <div className="font-bold text-ink break-keep">{item.title}</div>
-        <div className="flex flex-col gap-2">
-          <p className="text-sm text-text leading-6 break-keep">
-            <RichText text={item.description} />
-          </p>
-          {item.points && (
-            <ul className="flex flex-col gap-1">
-              {item.points.map((p) => (
-                <li key={p} className="flex gap-2 text-sm text-ink break-keep">
-                  <span className="text-brand-t3">·</span>
-                  <RichText text={p} />
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      </div>
-    ))}
-  </Card>
 );
