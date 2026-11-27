@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
+  ArrowDown,
   ArrowLeft,
   ArrowRight,
   ExternalLink,
@@ -43,7 +44,7 @@ const DEFAULT_TITLE: Record<SectionKey, string> = {
   implementations: "구현 사항",
   troubleshooting: "트러블슈팅",
   achievements: "주요 성과",
-  lessons: "배운 점",
+  lessons: "회고와 다음 개선",
 };
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -97,7 +98,41 @@ const ProjectDetail = ({
   if (project.techs) {
     sections.push({
       key: "techs",
-      body: <TechGrid items={project.techs} />,
+      body: (
+        <div className="flex flex-col gap-5">
+          <TechGrid items={project.techs} />
+          {project.techs.map(({ diagram }) => diagram && (
+            <Card key={diagram.title}>
+              <figure className="flex flex-col gap-5">
+                <figcaption>
+                  <h3 className="font-bold text-ink">{diagram.title}</h3>
+                  <p className="mt-1 text-sm leading-6 text-mute break-keep">{diagram.caption}</p>
+                </figcaption>
+                {diagram.paths.map(({ label, steps }) => (
+                  <div key={label} className="flex flex-col gap-2">
+                    <h4 className="text-sm font-bold text-brand">{label}</h4>
+                    <ol className="flex flex-col gap-2 md:grid md:grid-cols-4">
+                      {steps.map((step, index) => (
+                        <li key={step} className="flex flex-col items-stretch gap-2 md:flex-row md:items-center">
+                          {index > 0 && (
+                            <>
+                              <ArrowDown aria-hidden="true" size={14} className="self-center text-brand md:hidden" />
+                              <ArrowRight aria-hidden="true" size={14} className="hidden shrink-0 text-brand md:block" />
+                            </>
+                          )}
+                          <span className="flex-1 rounded-xl bg-surface2 px-3 py-2 text-center text-sm leading-5 text-ink break-keep">
+                            {step}
+                          </span>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                ))}
+              </figure>
+            </Card>
+          ))}
+        </div>
+      ),
     });
   }
 
@@ -171,6 +206,10 @@ const ProjectDetail = ({
                     </div>
                   ))}
                 </div>
+              </div>
+              <div className="rounded-lg border border-brand/20 px-5 py-4">
+                <p className="mb-1 text-sm font-bold text-brand">최종 선택</p>
+                <p className="text-sm leading-6 text-text break-keep"><RichText text={t.decision} /></p>
               </div>
               {(() => {
                 const result = (
@@ -252,12 +291,20 @@ const ProjectDetail = ({
     });
   }
 
+  const odySectionOrder: SectionKey[] = [
+    "implementations", "results", "troubleshooting", "decisions", "techs",
+    "overview", "demo", "achievements", "lessons",
+  ];
+  const orderedSections = project.id === 8
+    ? odySectionOrder.flatMap((key) => sections.filter((section) => section.key === key))
+    : sections;
+
   return (
     <article className="w-full max-w-5xl flex flex-col gap-20 md:gap-28">
       <Hero project={project} media={hero} />
       {galleryContent}
 
-      {sections.map((section, idx) => (
+      {orderedSections.map((section, idx) => (
         <Section
           key={section.key}
           chapter={`${pad(idx + 1)} · ${LABEL[section.key]}`}
@@ -423,7 +470,16 @@ const Section = ({
         {chapter}
       </span>
       <h2 className="text-2xl md:text-[28px] leading-snug font-bold text-ink break-keep">
-        {title}
+        {title.includes(", ") ? (
+          title.split(/(?<=,) /).map((clause, index) => (
+            <span key={index}>
+              {index > 0 && " "}
+              <span className="inline-block max-w-full align-top text-balance">{clause}</span>
+            </span>
+          ))
+        ) : (
+          <span className="block text-balance">{title}</span>
+        )}
       </h2>
     </div>
     {children}
@@ -533,7 +589,7 @@ const Labeled = ({ label, children }: { label: string; children: ReactNode }) =>
 const TechGrid = ({ items }: { items: TechType[] }) => (
   <div
     className={`grid grid-cols-1 gap-5 ${
-      items.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2"
+      items.length >= 3 ? "md:grid-cols-3" : items.length === 2 ? "md:grid-cols-2" : ""
     }`}
   >
     {items.map((item) => (
@@ -542,6 +598,12 @@ const TechGrid = ({ items }: { items: TechType[] }) => (
         <p className="text-sm text-mute leading-6 break-keep">
           <RichText text={item.description} />
         </p>
+        {item.reason && (
+          <div className="text-sm leading-6 text-text break-keep">
+            <p className="font-bold text-brand">선택 이유</p>
+            <p><RichText text={item.reason} /></p>
+          </div>
+        )}
         {item.points && (
           <ul className="flex flex-col gap-1.5 mt-auto pt-3 border-t border-[#eef0f4]">
             {item.points.map((p) => (
