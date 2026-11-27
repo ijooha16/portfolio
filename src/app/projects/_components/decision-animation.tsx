@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useInView, useReducedMotion } from "framer-motion";
+import { ArrowDown, ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { DecisionType } from "@/data/projects";
 
@@ -132,5 +133,35 @@ export default function DecisionAnimation({
         )}
       </motion.div>
     </div>
+  );
+}
+
+const returnRoute = ["현재 갈래", "마지막 공통 레이어", "재생 곡이 있는 갈래"];
+
+export function ReturnRoute() {
+  const reduced = useReducedMotion();
+
+  return (
+    <ol aria-label="재생 곡으로 돌아가는 경로" className="grid gap-2 sm:grid-cols-3">
+      {returnRoute.map((step, index) => (
+        <li key={step} className="flex min-w-0 flex-col items-center gap-2 sm:flex-row">
+          {index > 0 && (
+            <>
+              <ArrowDown aria-hidden="true" size={16} className="text-brand sm:hidden" />
+              <ArrowRight aria-hidden="true" size={16} className="hidden shrink-0 text-brand sm:block" />
+            </>
+          )}
+          <motion.span
+            initial={false}
+            whileInView={reduced ? undefined : { opacity: [1, 0.55, 1] }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{ duration: 0.45, delay: index * 0.32 }}
+            className="w-full flex-1 rounded-lg bg-brand-pale px-3 py-2 text-center text-sm font-semibold text-ink break-keep"
+          >
+            {step}
+          </motion.span>
+        </li>
+      ))}
+    </ol>
   );
 }

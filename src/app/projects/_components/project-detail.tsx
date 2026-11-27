@@ -16,7 +16,7 @@ import {
   SectionKey,
 } from "@/data/projects";
 import VideoPlayer from "./video-player";
-import DecisionAnimation from "./decision-animation";
+import DecisionAnimation, { ReturnRoute } from "./decision-animation";
 import { Chart } from "./charts";
 
 type Neighbor = Pick<ProjectType, "id" | "title"> | undefined;
@@ -182,6 +182,7 @@ const ProjectDetail = ({
                   </>
                 );
               })()}
+              {t.showReturnRoute && <ReturnRoute />}
               {t.media && <Media media={t.media} />}
             </Card>
           ))}
